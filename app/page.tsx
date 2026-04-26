@@ -9,32 +9,42 @@ export default function Home() {
   const [activeQuery, setActiveQuery] = useState(""); 
   const [loading, setLoading] = useState(true);
 
-  // 1. Fetch data
+  // 1. Fetch images from Cloudinary
   useEffect(() => {
     async function fetchImages() {
-      const cloudName = "dic1ahqrn"; 
-      const url = `https://res.cloudinary.com/${cloudName}/image/list/png.json`;
+      const url = `https://res.cloudinary.com/dic1ahqrn/image/list/png.json`;
       try {
         const res = await fetch(url);
         const data = await res.json();
         setAllImages(data.resources || []);
         setFilteredImages(data.resources || []);
-      } catch (e) { console.error(e); } finally { setLoading(false); }
+      } catch (e) { 
+        console.error(e); 
+      } finally { 
+        setLoading(false); 
+      }
     }
     fetchImages();
   }, []);
 
-  // 2. Search logic
+  // 2. Search functions
   const handleSearch = () => {
     setActiveQuery(searchInput);
-    const results = allImages.filter((img) => 
+    const results = allImages.filter(img => 
       img.public_id.toLowerCase().includes(searchInput.toLowerCase())
     );
     setFilteredImages(results);
   };
 
-  const handleKeyDown = (e: any) => { if (e.key === 'Enter') handleSearch(); };
-  const resetPage = () => { setActiveQuery(""); setSearchInput(""); setFilteredImages(allImages); };
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') handleSearch();
+  };
+
+  const resetPage = () => {
+    setActiveQuery("");
+    setSearchInput("");
+    setFilteredImages(allImages);
+  };
 
   return (
     <div style={{ backgroundColor: '#fff', minHeight: '100vh', fontFamily: 'sans-serif' }}>
@@ -42,90 +52,108 @@ export default function Home() {
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        /* --- LAYOUT 1: BIG HERO (HOME) --- */
-        .hero { position: relative; background: #eef2ff url('/bg-hero.jpg') no-repeat center center / cover; width: 100%; padding: 100px 20px; text-align: center; border-bottom: 1px solid #e2e8f0; }
-        .hero-title { font-size: 48px; font-weight: 900; color: #0f172a; letter-spacing: -2px; text-transform: uppercase; }
-        
-        /* --- LAYOUT 2: SEARCH HEADER (RESULT MODE) --- */
-        .search-header { padding: 15px 5%; border-bottom: 2px solid #2563eb; display: flex; align-items: center; justify-content: space-between; gap: 20px; background: #fff; }
-        .search-header-logo { font-size: 24px; font-weight: 900; color: #2563eb; text-decoration: none; cursor: pointer; white-space: nowrap; }
-        .search-header-input-container { flex: 1; max-width: 700px; position: relative; display: flex; align-items: center; }
-        .search-header-input { width: 100%; padding: 12px 25px; border-radius: 100px; border: 1px solid #cbd5e1; outline: none; font-size: 14px; }
-        .search-header-btn { position: absolute; right: 8px; background: #2563eb; color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; }
-        .search-header-tool { background: #0f172a; color: white; padding: 10px 20px; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: 13px; white-space: nowrap; }
+        /* HEADER 1: STANDARD (HOME) */
+        .nav-standard { 
+          width: 100%; padding: 20px 5%; display: flex; 
+          justify-content: space-between; align-items: center; 
+          background: #fff; border-bottom: 1px solid #f1f5f9;
+        }
 
-        /* Shared Components */
-        .search-container { margin-top: 30px; position: relative; max-width: 600px; margin-left: auto; margin-right: auto; display: flex; align-items: center; }
-        .search-box { width: 100%; padding: 18px 60px 18px 30px; border-radius: 100px; border: 1px solid #cbd5e1; outline: none; font-size: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); color: #000; background: #fff; }
-        .search-btn { position: absolute; right: 10px; background: #2563eb; color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; font-size: 18px; }
+        /* HEADER 2: SEARCH MODE (Like your 2nd screenshot) */
+        .search-mode-header { 
+          padding: 15px 5%; border-bottom: 2px solid #3b82f6; 
+          display: flex; align-items: center; justify-content: space-between; 
+          background: #fff; gap: 20px; 
+        }
+
+        .logo { font-size: 24px; font-weight: 900; color: #3b82f6; text-decoration: none; cursor: pointer; }
+        .btn-resize { background: #0f172a; color: #fff; padding: 10px 25px; border-radius: 50px; font-weight: bold; text-decoration: none; font-size: 13px; }
         
-        .grid-layout { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
-        @media (min-width: 768px) { .grid-layout { grid-template-columns: repeat(3, 1fr); } }
+        .search-bar-wrap { flex: 1; max-width: 600px; position: relative; }
+        .search-input-blue { width: 100%; padding: 12px 25px; border-radius: 100px; border: 1px solid #cbd5e1; outline: none; }
+        .search-input-blue:focus { border-color: #3b82f6; }
+        .search-icon-blue { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: #3b82f6; color: #fff; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; }
+
+        .hero-box { background: #f8fafc; padding: 80px 20px; text-align: center; }
+        .hero-title { font-size: 42px; font-weight: 900; margin-bottom: 20px; color: #0f172a; }
+
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 40px 5%; max-width: 1200px; margin: 0 auto; }
+        @media (min-width: 768px) { .grid { grid-template-columns: repeat(3, 1fr); } }
         
-        .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 20px; overflow: hidden; text-decoration: none; color: inherit; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
-        .checkerboard { height: 250px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f8fafc 25%, transparent 25%), linear-gradient(-45deg, #f8fafc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f8fafc 75%), linear-gradient(-45deg, transparent 75%, #f8fafc 75%); background-size: 15px 15px; background-color: #fff; padding: 20px; }
-        .card-info { padding: 15px 20px; border-top: 1px solid #f1f5f9; }
-        .card-title { font-size: 14px; font-weight: 700; color: #334155; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .card-footer { display: flex; justify-content: space-between; font-size: 10px; font-weight: 900; color: #94a3b8; }
+        .card { border: 1px solid #f1f5f9; border-radius: 20px; overflow: hidden; text-decoration: none; color: inherit; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .checkerboard { height: 220px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f8fafc 25%, transparent 25%), linear-gradient(-45deg, #f8fafc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f8fafc 75%), linear-gradient(-45deg, transparent 75%, #f8fafc 75%); background-size: 15px 15px; }
         
-        .result-bar { background: #2563eb; color: white; padding: 8px; text-align: center; font-size: 12px; font-weight: bold; }
+        .result-info-bar { background: #3b82f6; color: #fff; padding: 8px; text-align: center; font-size: 11px; font-weight: bold; text-transform: uppercase; }
       `}</style>
 
-      {/* --- CONDITIONAL HEADER --- */}
+      {/* --- SELECTIVE HEADER LOGIC --- */}
       {!activeQuery ? (
-        /* MODE A: HOME PAGE LAYOUT */
-        <div className="hero">
-          <h1 className="hero-title">PNG WORLD</h1>
-          <div className="search-container">
-            <input 
-              className="search-box" 
-              placeholder="Search thousands of PNGs..." 
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
-            <button className="search-btn" onClick={handleSearch}>🔍</button>
-          </div>
-        </div>
-      ) : (
-        /* MODE B: SEARCH MODE LAYOUT (Like your 2nd screenshot) */
+        /* MODE 1: STANDARD HOMEPAGE */
         <>
-          <div className="search-header">
-            <div className="search-header-logo" onClick={resetPage}>PNG WORLD</div>
-            
-            <div className="search-header-input-container">
-                <input 
-                className="search-header-input" 
-                placeholder="Search png" 
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                />
-                <button className="search-header-btn" onClick={handleSearch}>🔍</button>
+          <nav className="nav-standard">
+            <div className="logo" onClick={resetPage}>PNG<span style={{color: '#1e3a8a'}}>WORLD</span></div>
+            <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
+              <Link href="/" style={{ textDecoration: 'none', color: '#1e3a8a', fontWeight: 'bold', fontSize: '13px' }}>HOME</Link>
+              <Link href="/resize" className="btn-resize">RESIZE TOOL</Link>
             </div>
-
-            <Link href="/resize" className="search-header-tool">RESIZE TOOL</Link>
+          </nav>
+          <div className="hero-box">
+            <h1 className="hero-title">PNG WORLD</h1>
+            <div className="search-bar-wrap" style={{ margin: '0 auto' }}>
+              <input 
+                className="search-input-blue" 
+                placeholder="Search thousands of PNGs..." 
+                value={searchInput} 
+                onChange={e => setSearchInput(e.target.value)} 
+                onKeyDown={handleKeyDown} 
+              />
+              <button className="search-icon-blue" onClick={handleSearch}>🔍</button>
+            </div>
           </div>
-          <div className="result-bar">
-            {activeQuery} png images
+        </>
+      ) : (
+        /* MODE 2: SEARCH RESULT MODE (Hides standard nav, shows centered search) */
+        <>
+          <div className="search-mode-header">
+            <div className="logo" style={{fontSize: '20px'}} onClick={resetPage}>PNG WORLD</div>
+            <div className="search-bar-wrap">
+              <input 
+                className="search-input-blue" 
+                placeholder="Search png" 
+                value={searchInput} 
+                onChange={e => setSearchInput(e.target.value)} 
+                onKeyDown={handleKeyDown} 
+              />
+              <button className="search-icon-blue" onClick={handleSearch}>🔍</button>
+            </div>
+            <Link href="/resize" className="btn-resize" style={{fontSize: '11px', padding: '8px 15px'}}>RESIZE TOOL</Link>
+          </div>
+          <div className="result-info-bar">
+            Showing results for "{activeQuery} png images"
           </div>
         </>
       )}
 
-      {/* --- GRID (Always visible) --- */}
-      <div className="grid-layout">
-        {filteredImages.map((img) => (
+      {/* --- THE GRID --- */}
+      <div className="grid">
+        {loading ? (
+            <div style={{gridColumn: '1/-1', textAlign: 'center', padding: '50px'}}>Loading Images...</div>
+        ) : filteredImages.map((img) => (
           <Link key={img.public_id} href={`/png/${img.public_id}`} className="card">
             <div className="checkerboard">
-              <img src={`https://res.cloudinary.com/dic1ahqrn/image/upload/w_500,f_auto/${img.public_id}.png`} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
+              <img 
+                src={`https://res.cloudinary.com/dic1ahqrn/image/upload/w_400,f_auto/${img.public_id}.png`} 
+                alt="png" 
+                style={{ maxHeight: '90%', maxWidth: '90%', objectFit: 'contain' }} 
+              />
             </div>
-            <div className="card-info">
-              <div className="card-title">{img.public_id.split('/').pop()}</div>
-              <div className="card-footer">
-                <span>8K ULTRA HD</span>
-                <span style={{ color: '#2563eb' }}>GET PNG →</span>
-              </div>
+            <div style={{ padding: '15px', borderTop: '1px solid #eee' }}>
+                <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#334155', marginBottom: '5px' }}>{img.public_id.split('/').pop()}</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', fontWeight: '800', color: '#94a3b8' }}>
+                    <span>8K ULTRA HD</span>
+                    <span style={{color: '#3b82f6'}}>GET PNG →</span>
+                </div>
             </div>
           </Link>
         ))}
