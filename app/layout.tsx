@@ -72,7 +72,7 @@ export default function RootLayout({
         }}>
           <Link href="/" style={{ textDecoration: 'none' }}>
             <div style={{ fontWeight: 950, fontSize: '22px', color: '#1e3a8a', letterSpacing: '-1.5px' }}>
-              PNG<span style={{color:'#3b82f6'}}>WORLDS</span>
+              PNG <span style={{color:'#3b82f6'}}>WORLDS</span>
             </div>
           </Link>
           
