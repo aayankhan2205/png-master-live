@@ -78,23 +78,37 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
           </a>
         </div>
 
-        {/* RIGHT COLUMN: SIDEBAR */}
+          {/* RIGHT COLUMN: SIDEBAR */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
           
           <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '25px' }}>
             <h3 style={{ fontSize: '12px', fontWeight: 900, marginBottom: '15px', color: '#0f172a' }}>📐 ONLINE RESIZE PNG</h3>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <input type="text" placeholder="Width" style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0' }} />
-              <input type="text" placeholder="Height" style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0' }} />
+              <input 
+                type="number" 
+                id="userWidth"
+                placeholder="Width" 
+                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0' }} 
+              />
+              <input 
+                type="number" 
+                id="userHeight"
+                placeholder="Height" 
+                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0' }} 
+              />
             </div>
-            <button style={{ width: '100%', marginTop: '15px', padding: '12px', backgroundColor: '#0f172a', color: '#fff', borderRadius: '8px', border: 'none', fontWeight: 'bold', cursor: 'pointer' }}>Resize & Download</button>
+            <button 
+              onClick={() => {
+                const w = (document.getElementById('userWidth') as HTMLInputElement).value;
+                const h = (document.getElementById('userHeight') as HTMLInputElement).value;
+                const resizeUrl = `https://res.cloudinary.com/dic1ahqrn/image/upload/w_${w || 500},h_${h || 500},c_pad/f_auto/${img.public_id}.png`;
+                window.open(resizeUrl, '_blank');
+              }}
+              style={{ width: '100%', marginTop: '15px', padding: '12px', backgroundColor: '#0f172a', color: '#fff', borderRadius: '8px', border: 'none', fontWeight: 'bold', cursor: 'pointer' }}
+            >
+              Resize & Download
+            </button>
           </div>
-
-          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '25px' }}>
-            <h3 style={{ fontSize: '12px', fontWeight: 900, marginBottom: '10px' }}>ⓘ LICENSE</h3>
-            <p style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.5' }}>Free for personal and commercial use with attribution to PNGWORLDS.</p>
-          </div>
-
           <div style={{ height: '300px', backgroundColor: '#f1f5f9', border: '2px dashed #e2e8f0', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: '12px', fontWeight: 'bold' }}>
             ADVERTISEMENT
           </div>
