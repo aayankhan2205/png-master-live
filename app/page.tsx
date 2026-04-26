@@ -65,7 +65,7 @@ export default function Home() {
       `}</style>
 
       <div className="hero">
-        <h1 className="hero-title">PNG WORLDS</h1>
+        <h1 className="hero-title">PNG WORLD</h1>
         <div className="search-container">
           <input 
             className="search-box" 

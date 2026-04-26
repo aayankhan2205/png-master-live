@@ -72,7 +72,7 @@ export default function RootLayout({
         }}>
           <Link href="/" style={{ textDecoration: 'none' }}>
             <div style={{ fontWeight: 950, fontSize: '22px', color: '#1e3a8a', letterSpacing: '-1.5px' }}>
-              PNG <span style={{color:'#3b82f6'}}>WORLDS</span>
+              PNG <span style={{color:'#3b82f6'}}>WORLD</span>
             </div>
           </Link>
           
@@ -126,7 +126,7 @@ export default function RootLayout({
             </p>
             
             <div style={{ marginTop: '30px', borderTop: '1px solid #f1f5f9', paddingTop: '20px', color: '#cbd5e1', fontSize: '11px', fontWeight: 'bold' }}>
-              © {new Date().getFullYear()} PNGWORLDS. MADE FOR CREATIVE MINDS.
+              © {new Date().getFullYear()} PNGWORLD. MADE FOR CREATIVE MINDS.
             </div>
           </div>
         </footer>
