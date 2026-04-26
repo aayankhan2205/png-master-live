@@ -1,4 +1,8 @@
 "use client";
+
+// ADD THIS LINE BELOW 👇
+export const runtime = 'edge'; 
+
 import { useEffect, useState, use } from 'react';
 import Link from 'next/link';
 
