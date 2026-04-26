@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* This tells Cloudflare to ignore any small warnings */
-  typescript: { ignoreBuildErrors: true },
-  eslint: { ignoreDuringBuilds: true },
+  // We remove the keys that caused warnings
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 module.exports = nextConfig;
