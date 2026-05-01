@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 export default function Home() {
-  const [images, setImages] = useState<any[]>([]);
+  const [allImages, setAllImages] = useState<any[]>([]);
+  const [filteredImages, setFilteredImages] = useState<any[]>([]);
   const [searchInput, setSearchInput] = useState("");
   const [activeQuery, setActiveQuery] = useState(""); 
   const [loading, setLoading] = useState(true);
@@ -14,88 +15,182 @@ export default function Home() {
       try {
         const res = await fetch(url);
         const data = await res.json();
-        setImages(data.resources || []);
+        setAllImages(data.resources || []);
+        setFilteredImages(data.resources || []);
       } catch (e) { console.error(e); } finally { setLoading(false); }
     }
     fetchImages();
   }, []);
 
-  const handleSearch = () => setActiveQuery(searchInput);
+  const handleSearch = () => {
+    setActiveQuery(searchInput);
+    setFilteredImages(allImages.filter(img => img.public_id.toLowerCase().includes(searchInput.toLowerCase())));
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => { if (e.key === 'Enter') handleSearch(); };
+  const resetPage = () => { setActiveQuery(""); setSearchInput(""); setFilteredImages(allImages); };
 
   return (
     <div style={{ backgroundColor: '#fff', minHeight: '100vh', fontFamily: 'sans-serif' }}>
       
       <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(5deg); }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        /* --- DYNAMIC MESH GRADIENT HERO --- */
+        @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
         }
-        .hero-pro {
-          position: relative;
-          width: 100%;
-          height: 450px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          /* Professional CSS Background - No image needed */
-          background: radial-gradient(circle at top left, #e0e7ff, #ffffff),
-                      radial-gradient(circle at bottom right, #dbeafe, #ffffff);
+
+        @keyframes blobFloat1 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(30px, -50px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        @keyframes blobFloat2 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(-30px, 50px) scale(1.1); }
+          66% { transform: translate(20px, -20px) scale(0.9); }
+        }
+
+        .hero { 
+          position: relative; 
+          width: 100%; 
+          height: 500px; 
+          border-bottom: 1px solid #e2e8f0; 
+          display: flex; 
+          flex-direction: column; 
+          align-items: center; 
+          justify-content: center; 
           overflow: hidden;
-          border-bottom: 1px solid #f1f5f9;
+          background: linear-gradient(-45deg, #f8fafc, #e0e7ff, #f0fdf4, #eef2ff);
+          background-size: 400% 400%;
+          animation: gradientShift 15s ease infinite;
         }
-        .floating-obj {
-          position: absolute;
-          font-size: 80px;
-          opacity: 0.2;
-          animation: float 6s ease-in-out infinite;
-          pointer-events: none;
+
+        /* Abstract blurred blobs behind the text */
+        .blob-1 { position: absolute; width: 400px; height: 400px; background: #60a5fa; opacity: 0.15; border-radius: 50%; filter: blur(60px); top: -100px; left: -100px; animation: blobFloat1 12s infinite ease-in-out; pointer-events: none; }
+        .blob-2 { position: absolute; width: 500px; height: 500px; background: #818cf8; opacity: 0.15; border-radius: 50%; filter: blur(60px); bottom: -150px; right: -100px; animation: blobFloat2 15s infinite ease-in-out; pointer-events: none; }
+
+        /* --- NAVIGATION --- */
+        .nav-standard { width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; position: absolute; top: 0; left: 0; z-index: 150; }
+        .logo { font-size: 28px; font-weight: 900; color: #1e3a8a; text-decoration: none; cursor: pointer; letter-spacing: -1.5px; }
+        .btn-resize { background: #0f172a; color: #fff; padding: 12px 25px; border-radius: 50px; font-weight: bold; text-decoration: none; font-size: 13px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .btn-resize:hover { background: #000; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+
+        /* --- CONTENT & SEARCH --- */
+        .hero-content { position: relative; z-index: 10; text-align: center; width: 100%; padding: 0 20px; }
+        .hero-title { font-size: 64px; font-weight: 950; color: #0f172a; letter-spacing: -4px; margin-bottom: 20px; }
+        
+        .search-container { position: relative; width: 100%; max-width: 650px; margin: 0 auto; display: flex; align-items: center; }
+        .search-box { 
+          width: 100%; padding: 20px 65px 20px 30px; border-radius: 100px; 
+          border: 1px solid rgba(255,255,255,0.6); outline: none; font-size: 16px; 
+          box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); color: #000; 
+          background: rgba(255, 255, 255, 0.9);
+          backdrop-filter: blur(10px);
+          transition: all 0.3s;
         }
-        .search-box-pro {
-          width: 100%;
-          max-width: 550px;
-          padding: 18px 30px;
-          border-radius: 100px;
-          border: 1px solid #e2e8f0;
-          outline: none;
-          font-size: 16px;
-          background: white;
-          box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
-          color: #000;
+        .search-box:focus { background: #fff; border-color: #3b82f6; box-shadow: 0 25px 50px -12px rgba(37,99,235,0.25); }
+        .search-btn-hero { position: absolute; right: 10px; background: #3b82f6; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 20px; transition: 0.3s; }
+        .search-btn-hero:hover { background: #2563eb; transform: scale(1.05); }
+
+        /* --- SEARCH MODE HEADER (RESULT MODE) --- */
+        .search-mode-header { padding: 15px 5%; border-bottom: 2px solid #3b82f6; display: flex; align-items: center; justify-content: space-between; background: #fff; gap: 20px; }
+        .search-header-input-container { flex: 1; max-width: 700px; position: relative; display: flex; align-items: center; }
+        .search-header-input { width: 100%; padding: 12px 25px; border-radius: 100px; border: 1px solid #cbd5e1; outline: none; font-size: 14px; }
+        .search-header-btn { position: absolute; right: 8px; background: #3b82f6; color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; }
+        .result-bar { background: #3b82f6; color: white; padding: 8px; text-align: center; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- GRID --- */
+        .grid-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; padding: 30px 20px; max-width: 1200px; margin: 0 auto; }
+        @media (min-width: 768px) { .grid-layout { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 25px; padding: 50px; } }
+        
+        .card { background: #fff; border: 1px solid #f1f5f9; border-radius: 20px; overflow: hidden; text-decoration: none; color: inherit; transition: 0.3s; display: flex; flex-direction: column; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .card:hover { transform: translateY(-6px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-color: #e2e8f0; }
+        .checkerboard { height: 220px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f8fafc 25%, transparent 25%), linear-gradient(-45deg, #f8fafc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f8fafc 75%), linear-gradient(-45deg, transparent 75%, #f8fafc 75%); background-size: 15px 15px; background-color: #fff; padding: 20px; }
+        .card-info { padding: 15px 20px; border-top: 1px solid #f1f5f9; }
+        .card-title { font-size: 14px; font-weight: 800; color: #1e293b; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-footer { display: flex; justify-content: space-between; font-size: 10px; font-weight: 900; color: #94a3b8; letter-spacing: 0.5px; }
+
+        /* Mobile Fixes */
+        @media (max-width: 600px) {
+          .hero-title { font-size: 42px; letter-spacing: -2px; }
+          .hero { height: 400px; }
+          .logo { font-size: 20px; }
+          .nav-standard { padding: 15px; }
         }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
-        @media (min-width: 768px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-        .card { border: 1px solid #eee; border-radius: 20px; overflow: hidden; text-decoration: none; color: inherit; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        .checkerboard { height: 200px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f8fafc 25%, transparent 25%), linear-gradient(-45deg, #f8fafc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f8fafc 75%), linear-gradient(-45deg, transparent 75%, #f8fafc 75%); background-size: 15px 15px; }
       `}</style>
 
-      <div className="hero-pro">
-        {/* Floating Icons for Pro look */}
-        <div className="floating-obj" style={{top:'10%', left:'10%'}}>🍔</div>
-        <div className="floating-obj" style={{bottom:'10%', right:'10%', animationDelay:'2s'}}>🎧</div>
-        <div className="floating-obj" style={{top:'20%', right:'15%', animationDelay:'4s'}}>✈️</div>
+      {/* --- CONDITIONAL HEADER --- */}
+      {!activeQuery ? (
+        <div className="hero">
+          
+          {/* Animated Background Blobs */}
+          <div className="blob-1"></div>
+          <div className="blob-2"></div>
 
-        <div style={{ position: 'relative', zIndex: 10, textAlign: 'center' }}>
-          <h1 style={{ fontSize: '48px', fontWeight: 950, color: '#0f172a', letterSpacing: '-2px', marginBottom: '20px' }}>
-            PNG WORLD
-          </h1>
-          <input 
-            className="search-box-pro"
-            placeholder="Search thousands of premium PNGs..."
-            onChange={(e) => setSearchInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-          />
-        </div>
-      </div>
-
-      <div className="grid">
-        {images.map((img) => (
-          <Link key={img.public_id} href={`/png/${img.public_id}`} className="card">
-            <div className="checkerboard">
-              <img src={`https://res.cloudinary.com/dic1ahqrn/image/upload/w_400,f_auto/${img.public_id}.png`} style={{ maxHeight: '100%', objectFit: 'contain' }} />
+          <nav className="nav-standard">
+            <div className="logo" onClick={resetPage}>PNG<span style={{color: '#3b82f6'}}>WORLD</span></div>
+            <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
+              <Link href="/" style={{ textDecoration: 'none', color: '#1e3a8a', fontWeight: 'bold', fontSize: '13px' }}>HOME</Link>
+              <Link href="/resize" className="btn-resize">RESIZE TOOL</Link>
             </div>
-            <div style={{ padding: '15px', fontWeight: 'bold' }}>
-              {img.public_id.split('/').pop()}
+          </nav>
+          
+          <div className="hero-content">
+            <h1 className="hero-title">PNG WORLD</h1>
+            <div className="search-container">
+              <input 
+                className="search-box" 
+                placeholder="Search thousands of transparent PNGs..." 
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+              />
+              <button className="search-btn-hero" onClick={handleSearch}>🔍</button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="search-mode-header">
+            <div className="logo" style={{fontSize: '20px'}} onClick={resetPage}>PNG WORLD</div>
+            <div className="search-header-input-container">
+                <input 
+                className="search-header-input" 
+                placeholder="Search png" 
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                />
+                <button className="search-header-btn" onClick={handleSearch}>🔍</button>
+            </div>
+            <Link href="/resize" className="btn-resize" style={{fontSize: '11px', padding: '8px 15px'}}>RESIZE TOOL</Link>
+          </div>
+          <div className="result-bar">
+            Showing results for "{activeQuery}"
+          </div>
+        </>
+      )}
+
+      {/* --- GRID --- */}
+      <div className="grid-layout">
+        {loading ? (
+            <div style={{gridColumn: '1/-1', textAlign: 'center', padding: '50px', color: '#64748b', fontWeight: 'bold'}}>Loading Library...</div>
+        ) : filteredImages.map((img) => (
+          <Link key={img.public_id} href={`/png/${img.public_id}`} target="_blank" className="card">
+            <div className="checkerboard">
+              <img src={`https://res.cloudinary.com/dic1ahqrn/image/upload/w_500,f_auto/${img.public_id}.png`} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
+            </div>
+            <div className="card-info">
+              <div className="card-title">{img.public_id.split('/').pop()}</div>
+              <div className="card-footer">
+                <span>8K ULTRA HD</span>
+                <span style={{ color: '#3b82f6' }}>GET PNG →</span>
+              </div>
             </div>
           </Link>
         ))}
