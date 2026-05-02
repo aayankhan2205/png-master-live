@@ -43,36 +43,37 @@ export default function Home() {
           100% { background-position: 0% 50%; }
         }
 
-        @keyframes blobFloat1 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-
-        @keyframes blobFloat2 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(-30px, 50px) scale(1.1); }
-          66% { transform: translate(20px, -20px) scale(0.9); }
-        }
+        /* --- FLOATING ANIMATIONS --- */
+        @keyframes float1 { 0%, 100% { transform: translateY(0px) rotate(-10deg); } 50% { transform: translateY(-20px) rotate(-5deg); } }
+        @keyframes float2 { 0%, 100% { transform: translateY(0px) rotate(15deg); } 50% { transform: translateY(-15px) rotate(20deg); } }
+        @keyframes float3 { 0%, 100% { transform: translateY(0px) rotate(-5deg); } 50% { transform: translateY(-25px) rotate(0deg); } }
+        @keyframes float4 { 0%, 100% { transform: translateY(0px) rotate(10deg); } 50% { transform: translateY(-18px) rotate(15deg); } }
 
         .hero { 
           position: relative; 
           width: 100%; 
-          height: 500px; 
+          height: 520px; 
           border-bottom: 1px solid #e2e8f0; 
           display: flex; 
           flex-direction: column; 
           align-items: center; 
           justify-content: center; 
           overflow: hidden;
-          background: linear-gradient(-45deg, #eef2ff, #e0e7ff, #f8fafc, #dbeafe);
+          background: linear-gradient(-45deg, #eef2ff, #f8fafc, #e0e7ff, #f1f5f9);
           background-size: 400% 400%;
           animation: gradientShift 15s ease infinite;
         }
 
-        /* Abstract blurred blobs behind the text */
-        .blob-1 { position: absolute; width: 400px; height: 400px; background: #60a5fa; opacity: 0.15; border-radius: 50%; filter: blur(60px); top: -100px; left: -100px; animation: blobFloat1 12s infinite ease-in-out; pointer-events: none; }
-        .blob-2 { position: absolute; width: 500px; height: 500px; background: #818cf8; opacity: 0.15; border-radius: 50%; filter: blur(60px); bottom: -150px; right: -100px; animation: blobFloat2 15s infinite ease-in-out; pointer-events: none; }
+        /* Abstract blurred blobs behind the text for depth */
+        .blob-1 { position: absolute; width: 400px; height: 400px; background: #60a5fa; opacity: 0.15; border-radius: 50%; filter: blur(60px); top: -50px; left: -50px; pointer-events: none; }
+        .blob-2 { position: absolute; width: 500px; height: 500px; background: #818cf8; opacity: 0.15; border-radius: 50%; filter: blur(60px); bottom: -100px; right: -50px; pointer-events: none; }
+
+        /* Floating 3D Emojis */
+        .floating-icon { position: absolute; z-index: 5; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); pointer-events: none; }
+        .em-1 { font-size: 70px; top: 20%; left: 10%; animation: float1 6s ease-in-out infinite; }
+        .em-2 { font-size: 80px; top: 15%; right: 15%; animation: float2 7s ease-in-out infinite; animation-delay: 1s; }
+        .em-3 { font-size: 90px; bottom: 10%; left: 15%; animation: float3 8s ease-in-out infinite; animation-delay: 0.5s; }
+        .em-4 { font-size: 80px; bottom: 15%; right: 10%; animation: float4 6.5s ease-in-out infinite; animation-delay: 1.5s; }
 
         /* --- NAVIGATION --- */
         .nav-standard { width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; position: absolute; top: 0; left: 0; z-index: 150; }
@@ -82,16 +83,14 @@ export default function Home() {
 
         /* --- CONTENT & SEARCH --- */
         .hero-content { position: relative; z-index: 10; text-align: center; width: 100%; padding: 0 20px; }
-        .hero-title { font-size: 64px; font-weight: 950; color: #0f172a; letter-spacing: -4px; margin-bottom: 20px; }
+        .hero-title { font-size: 64px; font-weight: 950; color: #0f172a; letter-spacing: -4px; margin-bottom: 20px; text-shadow: 0 4px 20px rgba(255,255,255,0.8); }
         
         .search-container { position: relative; width: 100%; max-width: 650px; margin: 0 auto; display: flex; align-items: center; }
         .search-box { 
           width: 100%; padding: 20px 65px 20px 30px; border-radius: 100px; 
-          border: 1px solid rgba(0,0,0,0.1); outline: none; font-size: 16px; 
+          border: 1px solid rgba(255,255,255,0.6); outline: none; font-size: 16px; 
           box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); color: #000; 
-          background: rgba(255, 255, 255, 0.9);
-          backdrop-filter: blur(10px);
-          transition: all 0.3s;
+          background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); transition: all 0.3s;
         }
         .search-box:focus { background: #fff; border-color: #3b82f6; box-shadow: 0 25px 50px -12px rgba(37,99,235,0.25); }
         .search-btn-hero { position: absolute; right: 10px; background: #3b82f6; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 20px; transition: 0.3s; }
@@ -117,10 +116,16 @@ export default function Home() {
 
         /* Mobile Fixes */
         @media (max-width: 600px) {
-          .hero-title { font-size: 38px; letter-spacing: -1px; }
-          .hero { height: 400px; }
+          .hero-title { font-size: 42px; letter-spacing: -2px; }
+          .hero { height: 450px; }
           .logo { font-size: 20px; }
           .nav-standard { padding: 15px; }
+          
+          /* Resize and reposition emojis for mobile */
+          .em-1 { font-size: 40px; top: 80px; left: 5%; }
+          .em-2 { display: none; } /* Hide some to save space */
+          .em-3 { font-size: 50px; bottom: 80px; left: 5%; }
+          .em-4 { font-size: 45px; bottom: 120px; right: 5%; }
         }
       `}</style>
 
@@ -128,17 +133,24 @@ export default function Home() {
       {!activeQuery ? (
         <div className="hero">
           
+          {/* Animated Background Blobs */}
           <div className="blob-1"></div>
           <div className="blob-2"></div>
+
+          {/* Floating PNG Emojis */}
+          <div className="floating-icon em-1">🍔</div>
+          <div className="floating-icon em-2">🍕</div>
+          <div className="floating-icon em-3">🐶</div>
+          <div className="floating-icon em-4">✈️</div>
 
           <nav className="nav-standard">
             <div className="logo" onClick={resetPage}>PNG<span style={{color: '#3b82f6'}}>WORLD</span></div>
             <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-                <Link href="/" style={{textDecoration:'none', color:'#1e3a8a', fontWeight:'bold', fontSize:'13px'}}>HOME</Link>
+                <Link href="/" style={{textDecoration:'none', color:'#1e3a8a', fontWeight:'bold', fontSize:'13px', marginTop:'5px'}}>HOME</Link>
                 <Link href="/resize" className="btn-resize">RESIZE TOOL</Link>
             </div>
           </nav>
-
+          
           <div className="hero-content">
             <h1 className="hero-title">PNG WORLD</h1>
             <div className="search-container">
@@ -147,7 +159,7 @@ export default function Home() {
                 placeholder="Search thousands of transparent PNGs..." 
                 value={searchInput} 
                 onChange={e => setSearchInput(e.target.value)} 
-                onKeyDown={e => e.key === 'Enter' && handleSearch()} 
+                onKeyDown={handleKeyDown} 
               />
               <button className="search-btn-hero" onClick={handleSearch}>🔍</button>
             </div>
@@ -167,7 +179,7 @@ export default function Home() {
                 />
                 <button className="search-header-btn" onClick={handleSearch}>🔍</button>
             </div>
-            <Link href="/resize" className="btn-resize" style={{fontSize: '11px', padding: '8px 15px'}}>RESIZE</Link>
+            <Link href="/resize" className="btn-resize" style={{fontSize: '11px', padding: '8px 15px'}}>RESIZE TOOL</Link>
           </div>
           <div className="result-bar">
             Showing results for "{activeQuery}"
