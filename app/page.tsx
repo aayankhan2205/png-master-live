@@ -147,10 +147,11 @@ export default function Home() {
           .hero { height: 450px; }
           .logo { font-size: 20px; }
           .nav-standard { padding: 15px; }
-          .em-1 { font-size: 40px; top: 80px; left: 5%; }
-          .em-2 { display: none; } 
-          .em-3 { font-size: 50px; bottom: 80px; left: 5%; }
-          .em-4 { font-size: 45px; bottom: 120px; right: 5%; }
+        /* ALL 4 EMOJIS VISIBLE AND PERFECTLY PLACED ON MOBILE */
+          .em-1 { font-size: 40px; top: 100px; left: 5%; } /* Burger: Top Left */
+          .em-2 { display: block; font-size: 40px; top: 110px; right: 5%; } /* Pizza: Top Right */
+          .em-3 { font-size: 50px; bottom: 40px; left: 5%; } /* Dog: Bottom Left */
+          .em-4 { font-size: 45px; bottom: 60px; right: 5%; } /* Airplane: Bottom Right (moved down) */
         }
       `}</style>
 
