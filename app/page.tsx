@@ -159,6 +159,8 @@ export default function Home() {
           <div className="real-star s-4">⭐</div>
           <div className="real-star s-5">✨</div>
           <div className="real-star s-6">⭐</div>
+          <div className="real-star s-6">⭐</div>
+
 
           <div className="floating-icon em-1">🍔</div>
           <div className="floating-icon em-2">🍕</div>
@@ -166,7 +168,7 @@ export default function Home() {
           <div className="floating-icon em-4">✈️</div>
 
           <nav className="nav-standard">
-            <div className="logo" onClick={resetPage}>PNG<span style={{color: '#3b82f6'}}>WORLD</span></div>
+            <div className="logo" onClick={resetPage}>PNG<span style={{color: '#3b82f6'}} >WORLD</span></div>
             <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                 <Link href="/" style={{textDecoration:'none', color:'#1e3a8a', fontWeight:'bold', fontSize:'13px', marginTop:'5px'}}>HOME</Link>
                 <Link href="/resize" className="btn-resize">RESIZE TOOL</Link>
