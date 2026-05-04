@@ -43,20 +43,20 @@ export default function Home() {
           100% { background-position: 0% 50%; }
         }
 
-        /* --- FLOATING & TWINKLING ANIMATIONS --- */
+        /* --- FLOATING ANIMATIONS --- */
         @keyframes float1 { 0%, 100% { transform: translateY(0px) rotate(-10deg); } 50% { transform: translateY(-20px) rotate(-5deg); } }
         @keyframes float2 { 0%, 100% { transform: translateY(0px) rotate(15deg); } 50% { transform: translateY(-15px) rotate(20deg); } }
         @keyframes float3 { 0%, 100% { transform: translateY(0px) rotate(-5deg); } 50% { transform: translateY(-25px) rotate(0deg); } }
         @keyframes float4 { 0%, 100% { transform: translateY(0px) rotate(10deg); } 50% { transform: translateY(-18px) rotate(15deg); } }
 
-        /* Magic Star Animations */
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.2; transform: scale(0.8); }
-          50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 10px 2px rgba(255, 215, 0, 0.5); }
+        /* --- BLINKING STAR ANIMATIONS --- */
+        @keyframes starBlink {
+          0%, 100% { opacity: 0.1; transform: scale(0.5); }
+          50% { opacity: 0.8; transform: scale(1.2); }
         }
-        @keyframes rise {
+        @keyframes starRise {
           0% { transform: translateY(0px); }
-          100% { transform: translateY(-100px); opacity: 0; }
+          100% { transform: translateY(-150px); opacity: 0; }
         }
 
         .hero { 
@@ -74,24 +74,22 @@ export default function Home() {
           animation: gradientShift 15s ease infinite;
         }
 
-        /* Abstract blurred blobs behind the text for depth */
         .blob-1 { position: absolute; width: 400px; height: 400px; background: #60a5fa; opacity: 0.15; border-radius: 50%; filter: blur(60px); top: -50px; left: -50px; pointer-events: none; }
         .blob-2 { position: absolute; width: 500px; height: 500px; background: #818cf8; opacity: 0.15; border-radius: 50%; filter: blur(60px); bottom: -100px; right: -50px; pointer-events: none; }
 
-        /* --- TWINKLING STARS --- */
-        .star {
+        /* REAL BLINKING STARS */
+        .real-star {
           position: absolute;
-          background-color: #fbbf24;
-          border-radius: 50%;
-          pointer-events: none;
           z-index: 2;
+          pointer-events: none;
+          filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
         }
-        .star-1 { width: 6px; height: 6px; top: 20%; left: 25%; animation: twinkle 3s infinite ease-in-out, rise 15s infinite linear; }
-        .star-2 { width: 4px; height: 4px; top: 60%; left: 15%; animation: twinkle 4s infinite ease-in-out 1s, rise 20s infinite linear; }
-        .star-3 { width: 8px; height: 8px; top: 30%; right: 20%; animation: twinkle 2.5s infinite ease-in-out 0.5s, rise 12s infinite linear; background-color: #60a5fa;}
-        .star-4 { width: 5px; height: 5px; top: 75%; right: 30%; animation: twinkle 5s infinite ease-in-out 2s, rise 18s infinite linear; }
-        .star-5 { width: 7px; height: 7px; top: 15%; right: 45%; animation: twinkle 3.5s infinite ease-in-out 1.5s, rise 14s infinite linear; background-color: #fbbf24;}
-        .star-6 { width: 3px; height: 3px; top: 80%; left: 40%; animation: twinkle 4.5s infinite ease-in-out 0.2s, rise 22s infinite linear; }
+        .s-1 { font-size: 14px; top: 25%; left: 20%; animation: starBlink 4s infinite ease-in-out, starRise 20s infinite linear; }
+        .s-2 { font-size: 20px; top: 60%; left: 10%; animation: starBlink 3s infinite ease-in-out 1s, starRise 15s infinite linear; }
+        .s-3 { font-size: 12px; top: 15%; right: 25%; animation: starBlink 5s infinite ease-in-out 0.5s, starRise 25s infinite linear; }
+        .s-4 { font-size: 16px; top: 70%; right: 15%; animation: starBlink 4.5s infinite ease-in-out 2s, starRise 18s infinite linear; }
+        .s-5 { font-size: 22px; top: 35%; right: 8%; animation: starBlink 3.5s infinite ease-in-out 1.5s, starRise 22s infinite linear; }
+        .s-6 { font-size: 10px; top: 80%; left: 35%; animation: starBlink 6s infinite ease-in-out 0.2s, starRise 30s infinite linear; }
 
         /* Floating 3D Emojis */
         .floating-icon { position: absolute; z-index: 5; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); pointer-events: none; }
@@ -111,14 +109,7 @@ export default function Home() {
         .hero-title { font-size: 64px; font-weight: 950; color: #0f172a; letter-spacing: -4px; margin-bottom: 20px; text-shadow: 0 4px 20px rgba(255,255,255,0.8); }
         
         .search-container { position: relative; width: 100%; max-width: 650px; margin: 0 auto; display: flex; align-items: center; }
-        .search-box { 
-          width: 100%; padding: 20px 65px 20px 30px; border-radius: 100px; 
-          border: 1px solid rgba(255,255,255,0.6); outline: none; font-size: 16px; 
-          box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); color: #000; 
-          background: rgba(255, 255, 255, 0.9);
-          backdrop-filter: blur(10px);
-          transition: all 0.3s;
-        }
+        .search-box { width: 100%; padding: 20px 65px 20px 30px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.6); outline: none; font-size: 16px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); color: #000; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); transition: all 0.3s; }
         .search-box:focus { background: #fff; border-color: #3b82f6; box-shadow: 0 25px 50px -12px rgba(37,99,235,0.25); }
         .search-btn-hero { position: absolute; right: 10px; background: #3b82f6; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 20px; transition: 0.3s; }
         .search-btn-hero:hover { background: #2563eb; transform: scale(1.05); }
@@ -158,19 +149,17 @@ export default function Home() {
       {!activeQuery ? (
         <div className="hero">
           
-          {/* Animated Background Blobs */}
           <div className="blob-1"></div>
           <div className="blob-2"></div>
 
-          {/* Twinkling Stars */}
-          <div className="star star-1"></div>
-          <div className="star star-2"></div>
-          <div className="star star-3"></div>
-          <div className="star star-4"></div>
-          <div className="star star-5"></div>
-          <div className="star star-6"></div>
+          {/* REAL BLINKING STARS ✨⭐ */}
+          <div className="real-star s-1">✨</div>
+          <div className="real-star s-2">⭐</div>
+          <div className="real-star s-3">✨</div>
+          <div className="real-star s-4">⭐</div>
+          <div className="real-star s-5">✨</div>
+          <div className="real-star s-6">⭐</div>
 
-          {/* Floating PNG Emojis */}
           <div className="floating-icon em-1">🍔</div>
           <div className="floating-icon em-2">🍕</div>
           <div className="floating-icon em-3">🐶</div>
@@ -192,7 +181,7 @@ export default function Home() {
                 placeholder="Search thousands of transparent PNGs..." 
                 value={searchInput} 
                 onChange={e => setSearchInput(e.target.value)} 
-                onKeyDown={handleKeyDown} 
+                onKeyDown={e => e.key === 'Enter' && handleSearch()} 
               />
               <button className="search-btn-hero" onClick={handleSearch}>🔍</button>
             </div>
