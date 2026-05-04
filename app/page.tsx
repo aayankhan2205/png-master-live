@@ -43,7 +43,7 @@ export default function Home() {
           100% { background-position: 0% 50%; }
         }
 
-        /* --- FLOATING ANIMATIONS --- */
+        /* --- FLOATING & TWINKLING ANIMATIONS --- */
         @keyframes float1 { 0%, 100% { transform: translateY(0px) rotate(-10deg); } 50% { transform: translateY(-20px) rotate(-5deg); } }
         @keyframes float2 { 0%, 100% { transform: translateY(0px) rotate(15deg); } 50% { transform: translateY(-15px) rotate(20deg); } }
         @keyframes float3 { 0%, 100% { transform: translateY(0px) rotate(-5deg); } 50% { transform: translateY(-25px) rotate(0deg); } }
@@ -109,7 +109,14 @@ export default function Home() {
         .hero-title { font-size: 64px; font-weight: 950; color: #0f172a; letter-spacing: -4px; margin-bottom: 20px; text-shadow: 0 4px 20px rgba(255,255,255,0.8); }
         
         .search-container { position: relative; width: 100%; max-width: 650px; margin: 0 auto; display: flex; align-items: center; }
-        .search-box { width: 100%; padding: 20px 65px 20px 30px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.6); outline: none; font-size: 16px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); color: #000; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); transition: all 0.3s; }
+        .search-box { 
+          width: 100%; padding: 20px 65px 20px 30px; border-radius: 100px; 
+          border: 1px solid rgba(255,255,255,0.6); outline: none; font-size: 16px; 
+          box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); color: #000; 
+          background: rgba(255, 255, 255, 0.9);
+          backdrop-filter: blur(10px);
+          transition: all 0.3s;
+        }
         .search-box:focus { background: #fff; border-color: #3b82f6; box-shadow: 0 25px 50px -12px rgba(37,99,235,0.25); }
         .search-btn-hero { position: absolute; right: 10px; background: #3b82f6; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 20px; transition: 0.3s; }
         .search-btn-hero:hover { background: #2563eb; transform: scale(1.05); }
@@ -149,6 +156,7 @@ export default function Home() {
       {!activeQuery ? (
         <div className="hero">
           
+          {/* Animated Background Blobs */}
           <div className="blob-1"></div>
           <div className="blob-2"></div>
 
@@ -159,8 +167,6 @@ export default function Home() {
           <div className="real-star s-4">⭐</div>
           <div className="real-star s-5">✨</div>
           <div className="real-star s-6">⭐</div>
-          <div className="real-star s-7">⭐</div>
-
 
           <div className="floating-icon em-1">🍔</div>
           <div className="floating-icon em-2">🍕</div>
@@ -192,7 +198,7 @@ export default function Home() {
       ) : (
         <>
           <div className="search-mode-header">
-            <div className="logo" style={{fontSize: '20px'}} onClick={resetPage}>PNG WORLD</div>
+            <div className="logo" style={{fontSize: '20px'}} onClick={resetPage}>PNG <span style={{color: '#3b82f6'}}>WORLD</span></div>
             <div className="search-header-input-container">
                 <input 
                 className="search-header-input" 
