@@ -92,8 +92,8 @@ export default function Home() {
         .s-4 { font-size: 28px; top: 70%; right: 15%; animation: starBlink 4.5s infinite ease-in-out 2s, starRise 18s infinite linear; }
         .s-5 { font-size: 38px; top: 35%; right: 8%; animation: starBlink 3.5s infinite ease-in-out 1.5s, starRise 22s infinite linear; }
         .s-6 { font-size: 18px; top: 80%; left: 35%; animation: starBlink 3s infinite ease-in-out 0.2s, starRise 30s infinite linear; }
-        .s-7 { font-size: 38px; top: 35%; right: 6%; animation: starBlink 3.5s infinite ease-in-out 1.5s, starRise 22s infinite linear; }
-        .s-8 { font-size: 18px; top: 80%; left: 25%; animation: starBlink 3s infinite ease-in-out 0.2s, starRise 30s infinite linear; }
+        .s-7 { font-size: 38px; top: 35%; right: 60%; animation: starBlink 3.5s infinite ease-in-out 1.5s, starRise 22s infinite linear; }
+        .s-8 { font-size: 28px; top: 80%; left: 55%; animation: starBlink 3s infinite ease-in-out 0.2s, starRise 30s infinite linear; }
 
 
         /* Floating 3D Emojis */
