@@ -77,19 +77,21 @@ export default function Home() {
         .blob-1 { position: absolute; width: 400px; height: 400px; background: #60a5fa; opacity: 0.15; border-radius: 50%; filter: blur(60px); top: -50px; left: -50px; pointer-events: none; }
         .blob-2 { position: absolute; width: 500px; height: 500px; background: #818cf8; opacity: 0.15; border-radius: 50%; filter: blur(60px); bottom: -100px; right: -50px; pointer-events: none; }
 
-        /* REAL BLINKING STARS */
+         /* REAL BLINKING STARS */
         .real-star {
           position: absolute;
           z-index: 2;
           pointer-events: none;
-          filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+          /* Adding a stronger golden glow around the stars */
+          filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
         }
-        .s-1 { font-size: 14px; top: 25%; left: 20%; animation: starBlink 4s infinite ease-in-out, starRise 20s infinite linear; }
-        .s-2 { font-size: 20px; top: 60%; left: 10%; animation: starBlink 3s infinite ease-in-out 1s, starRise 15s infinite linear; }
-        .s-3 { font-size: 12px; top: 15%; right: 25%; animation: starBlink 5s infinite ease-in-out 0.5s, starRise 25s infinite linear; }
-        .s-4 { font-size: 16px; top: 70%; right: 15%; animation: starBlink 4.5s infinite ease-in-out 2s, starRise 18s infinite linear; }
-        .s-5 { font-size: 22px; top: 35%; right: 8%; animation: starBlink 3.5s infinite ease-in-out 1.5s, starRise 22s infinite linear; }
-        .s-6 { font-size: 10px; top: 80%; left: 35%; animation: starBlink 6s infinite ease-in-out 0.2s, starRise 30s infinite linear; }
+        /* Increased font sizes for all stars */
+        .s-1 { font-size: 24px; top: 25%; left: 20%; animation: starBlink 4s infinite ease-in-out, starRise 20s infinite linear; }
+        .s-2 { font-size: 32px; top: 60%; left: 10%; animation: starBlink 3s infinite ease-in-out 1s, starRise 15s infinite linear; }
+        .s-3 { font-size: 20px; top: 15%; right: 25%; animation: starBlink 5s infinite ease-in-out 0.5s, starRise 25s infinite linear; }
+        .s-4 { font-size: 28px; top: 70%; right: 15%; animation: starBlink 4.5s infinite ease-in-out 2s, starRise 18s infinite linear; }
+        .s-5 { font-size: 38px; top: 35%; right: 8%; animation: starBlink 3.5s infinite ease-in-out 1.5s, starRise 22s infinite linear; }
+        .s-6 { font-size: 18px; top: 80%; left: 35%; animation: starBlink 6s infinite ease-in-out 0.2s, starRise 30s infinite linear; }
 
         /* Floating 3D Emojis */
         .floating-icon { position: absolute; z-index: 5; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); pointer-events: none; }
