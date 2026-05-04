@@ -83,7 +83,7 @@ export default function Home() {
           z-index: 2;
           pointer-events: none;
           /* Adding a stronger golden glow around the stars */
-          filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+          filter: drop-shadow(0 0 8px rgba(255, 217, 0, 0.91));
         }
         /* Increased font sizes for all stars */
         .s-1 { font-size: 24px; top: 25%; left: 20%; animation: starBlink 4s infinite ease-in-out, starRise 20s infinite linear; }
@@ -91,7 +91,10 @@ export default function Home() {
         .s-3 { font-size: 20px; top: 15%; right: 25%; animation: starBlink 5s infinite ease-in-out 0.5s, starRise 25s infinite linear; }
         .s-4 { font-size: 28px; top: 70%; right: 15%; animation: starBlink 4.5s infinite ease-in-out 2s, starRise 18s infinite linear; }
         .s-5 { font-size: 38px; top: 35%; right: 8%; animation: starBlink 3.5s infinite ease-in-out 1.5s, starRise 22s infinite linear; }
-        .s-6 { font-size: 18px; top: 80%; left: 35%; animation: starBlink 6s infinite ease-in-out 0.2s, starRise 30s infinite linear; }
+        .s-6 { font-size: 18px; top: 80%; left: 35%; animation: starBlink 3s infinite ease-in-out 0.2s, starRise 30s infinite linear; }
+        .s-7 { font-size: 38px; top: 35%; right: 6%; animation: starBlink 3.5s infinite ease-in-out 1.5s, starRise 22s infinite linear; }
+        .s-8 { font-size: 18px; top: 80%; left: 25%; animation: starBlink 3s infinite ease-in-out 0.2s, starRise 30s infinite linear; }
+
 
         /* Floating 3D Emojis */
         .floating-icon { position: absolute; z-index: 5; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); pointer-events: none; }
@@ -170,6 +173,8 @@ export default function Home() {
           <div className="real-star s-4">⭐</div>
           <div className="real-star s-5">✨</div>
           <div className="real-star s-6">⭐</div>
+          <div className="real-star s-7">✨</div>
+          <div className="real-star s-8">⭐</div>
 
           <div className="floating-icon em-1">🍔</div>
           <div className="floating-icon em-2">🍕</div>
