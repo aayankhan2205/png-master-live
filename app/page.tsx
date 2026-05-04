@@ -87,7 +87,7 @@ export default function Home() {
         }
         /* Increased font sizes for all stars */
         .s-1 { font-size: 24px; top: 25%; left: 20%; animation: starBlink 4s infinite ease-in-out, starRise 20s infinite linear; }
-        .s-2 { font-size: 92px; top: 60%; left: 10%; animation: starBlink 3s infinite ease-in-out 1s, starRise 15s infinite linear; }
+        .s-2 { font-size: 42px; top: 60%; left: 10%; animation: starBlink 3s infinite ease-in-out 1s, starRise 15s infinite linear; }
         .s-3 { font-size: 20px; top: 15%; right: 25%; animation: starBlink 5s infinite ease-in-out 0.5s, starRise 25s infinite linear; }
         .s-4 { font-size: 28px; top: 70%; right: 15%; animation: starBlink 4.5s infinite ease-in-out 2s, starRise 18s infinite linear; }
         .s-5 { font-size: 38px; top: 35%; right: 8%; animation: starBlink 3.5s infinite ease-in-out 1.5s, starRise 22s infinite linear; }
