@@ -66,8 +66,8 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
     }
   };
 
-  if (loading) return <div style={{ padding: '100px', textAlign: 'center', fontFamily: 'sans-serif' }}>Loading...</div>;
-  if (!img) return <div style={{ padding: '100px', textAlign: 'center', fontFamily: 'sans-serif' }}>Image not found</div>;
+  if (loading) return <div style={{ padding: '100px', textAlign: 'center', fontFamily: 'sans-serif', fontWeight: 'bold', color: '#64748b' }}>Loading Image...</div>;
+  if (!img) return <div style={{ padding: '100px', textAlign: 'center', fontFamily: 'sans-serif', fontWeight: 'bold', color: '#ef4444' }}>Image not found</div>;
 
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px', fontFamily: 'sans-serif', color: '#0f172a' }}>
@@ -75,10 +75,18 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
       <style>{`
         .ad-horizontal { width: 100%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
         .ad-vertical { width: 100%; height: 600px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
+        
         .detail-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
-        @media (min-width: 1024px) { .detail-grid { grid-template-columns: 2fr 1fr; } }
+        .action-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 30px; }
+        
+        @media (min-width: 1024px) { 
+          .detail-grid { grid-template-columns: 2fr 1fr; } 
+          .action-grid { grid-template-columns: 1fr 1fr; } /* Puts Download & Resize side-by-side */
+        }
+
         .checkerboard { height: 320px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f1f5f9 25%, transparent 25%), linear-gradient(-45deg, #f1f5f9 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f1f5f9 75%), linear-gradient(-45deg, transparent 75%, #f1f5f9 75%); background-size: 15px 15px; background-color: #fff; padding: 20px; border: 1px solid #e2e8f0; border-radius: 20px; margin-bottom: 25px; }
         .main-img { max-height: 280px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); }
+        
         .related-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; margin-top: 20px; }
         @media (min-width: 768px) { .related-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
         .r-card { border: 1px solid #e2e8f0; border-radius: 15px; overflow: hidden; text-decoration: none; color: inherit; transition: 0.2s; background: #fff;}
@@ -93,6 +101,8 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
       </div>
 
       <div className="detail-grid">
+        
+        {/* --- LEFT COLUMN --- */}
         <div>
           <div className="ad-horizontal">ADVERTISEMENT SLOT (TOP)</div>
           
@@ -104,38 +114,56 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
             {img.public_id.split('/').pop()} Transparent PNG
           </h1>
 
-          <button 
-            onClick={() => silentDownload(false)}
-            disabled={downloading}
-            style={{ width: '100%', backgroundColor: '#2563eb', color: '#fff', padding: '18px', borderRadius: '16px', fontWeight: '900', fontSize: '18px', border: 'none', cursor: 'pointer', marginBottom: '20px', opacity: downloading ? 0.7 : 1 }}
-          >
-            {downloading ? "PROCESSING..." : "📥 DOWNLOAD ORIGINAL PNG"}
-          </button>
+          {/* ACTION GRID: Download & Resize Side-by-Side */}
+          <div className="action-grid">
+            
+            {/* Box 1: Original Download */}
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <button 
+                onClick={() => silentDownload(false)}
+                disabled={downloading}
+                style={{ height: '100%', minHeight: '110px', backgroundColor: '#2563eb', color: '#fff', padding: '20px', borderRadius: '16px', fontWeight: '900', fontSize: '18px', border: 'none', cursor: 'pointer', opacity: downloading ? 0.7 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 20px rgba(37,99,235,0.2)' }}
+              >
+                {downloading ? "PROCESSING..." : "📥 DOWNLOAD ORIGINAL"}
+              </button>
+            </div>
 
-          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '20px', marginBottom: '30px' }}>
-            <h3 style={{ fontSize: '13px', fontWeight: 900, marginBottom: '15px' }}>📐 ONLINE RESIZE & DOWNLOAD</h3>
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <input type="number" placeholder="Width (px)" value={w} onChange={e => setW(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none' }} />
-              <input type="number" placeholder="Height (px)" value={h} onChange={e => setH(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none' }} />
-              <button onClick={() => silentDownload(true)} disabled={downloading} style={{ backgroundColor: '#0f172a', color: '#fff', padding: '0 25px', borderRadius: '8px', fontWeight: 'bold', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            {/* Box 2: Resize Tool */}
+            <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '15px' }}>
+              <h3 style={{ fontSize: '12px', fontWeight: 900, marginBottom: '10px', color: '#0f172a' }}>📐 RESIZE & DOWNLOAD</h3>
+              <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+                <input type="number" placeholder="Width" value={w} onChange={e => setW(e.target.value)} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '12px' }} />
+                <input type="number" placeholder="Height" value={h} onChange={e => setH(e.target.value)} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '12px' }} />
+              </div>
+              <button 
+                onClick={() => silentDownload(true)} 
+                disabled={downloading} 
+                style={{ width: '100%', backgroundColor: '#0f172a', color: '#fff', padding: '12px', borderRadius: '8px', fontWeight: 'bold', border: 'none', cursor: 'pointer', fontSize: '12px' }}
+              >
                 {downloading ? "Wait..." : "Resize"}
               </button>
             </div>
+
           </div>
 
           <div className="ad-horizontal">ADVERTISEMENT SLOT (BOTTOM)</div>
         </div>
 
+        {/* --- RIGHT COLUMN (SIDEBAR) --- */}
         <div>
-          <div className="ad-vertical">SIDEBAR AD SLOT</div>
-          <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '20px' }}>
+          {/* LICENSE MOVED UP */}
+          <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '20px', marginBottom: '25px' }}>
             <h3 style={{ fontSize: '12px', fontWeight: 900, marginBottom: '10px' }}>ⓘ LICENSE</h3>
             <p style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.6' }}>Free for personal and commercial use. No attribution required.</p>
           </div>
+
+          {/* AD SLOT MOVED DOWN */}
+          <div className="ad-vertical">SIDEBAR AD SLOT</div>
         </div>
       </div>
 
-      <div style={{ marginTop: '50px', borderTop: '2px solid #f1f5f9', paddingTop: '40px' }}>
+      {/* --- RELATED IMAGES --- */}
+      <div style={{ marginTop: '30px', borderTop: '2px solid #f1f5f9', paddingTop: '40px' }}>
         <h2 style={{ fontSize: '22px', fontWeight: 900, marginBottom: '10px' }}>Related PNG Images</h2>
         <div className="related-grid">
           {relatedImages.map((relImg) => (
