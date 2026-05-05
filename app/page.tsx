@@ -150,7 +150,14 @@ export default function Home() {
         .card-footer { display: flex; justify-content: space-between; font-size: 10px; font-weight: 900; color: #94a3b8; letter-spacing: 0.5px; }
 
         /* Mobile Fixes */
-        .grid-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .grid-layout { 
+          display: grid; 
+          grid-template-columns: repeat(2, minmax(0, 1fr)); 
+          gap: 12px; 
+          padding: 20px 15px; 
+          max-width: 1200px; 
+          margin: 0 auto; 
+        }
         @media (max-width: 600px) {
           .hero-title { font-size: 42px; letter-spacing: -2px; }
           .hero { height: 450px; }
