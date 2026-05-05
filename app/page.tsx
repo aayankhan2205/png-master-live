@@ -156,7 +156,7 @@ export default function Home() {
         @media (min-width: 768px) {
           .grid-layout { 
             grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 COLUMNS ALWAYS ON DESKTOP */
-            gap: 10px; 
+            gap: 8px; 
             padding: 50px 20px; 
           }
         }
