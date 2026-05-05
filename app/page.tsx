@@ -135,8 +135,13 @@ export default function Home() {
 
         /* --- GRID --- */
         .grid-layout { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 30px 20px; max-width: 1200px; margin: 0 auto; }
-        @media (min-width: 768px) { .grid-layout { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 25px; padding: 50px; } }
-        
+        @media (min-width: 768px) { 
+          .grid-layout { 
+            grid-template-columns: repeat(3, minmax(0, 1fr)); 
+            gap: 15px; 
+            padding: 40px 20px; 
+          } 
+        }
         .card { background: #fff; border: 1px solid #f1f5f9; border-radius: 20px; overflow: hidden; text-decoration: none; color: inherit; transition: 0.3s; display: flex; flex-direction: column; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .card:hover { transform: translateY(-6px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-color: #e2e8f0; }
         .checkerboard { height: 220px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f8fafc 25%, transparent 25%), linear-gradient(-45deg, #f8fafc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f8fafc 75%), linear-gradient(-45deg, transparent 75%, #f8fafc 75%); background-size: 15px 15px; background-color: #fff; padding: 20px; }
