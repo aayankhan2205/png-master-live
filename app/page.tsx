@@ -134,7 +134,7 @@ export default function Home() {
         .result-bar { background: #3b82f6; color: white; padding: 8px; text-align: center; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
 
         /* --- GRID --- */
-        .grid-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; padding: 30px 20px; max-width: 1200px; margin: 0 auto; }
+        .grid-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 30px 20px; max-width: 1200px; margin: 0 auto; }
         @media (min-width: 768px) { .grid-layout { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 25px; padding: 50px; } }
         
         .card { background: #fff; border: 1px solid #f1f5f9; border-radius: 20px; overflow: hidden; text-decoration: none; color: inherit; transition: 0.3s; display: flex; flex-direction: column; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
@@ -145,6 +145,7 @@ export default function Home() {
         .card-footer { display: flex; justify-content: space-between; font-size: 10px; font-weight: 900; color: #94a3b8; letter-spacing: 0.5px; }
 
         /* Mobile Fixes */
+        .grid-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 20px; max-width: 1200px; margin: 0 auto; }
         @media (max-width: 600px) {
           .hero-title { font-size: 42px; letter-spacing: -2px; }
           .hero { height: 450px; }
