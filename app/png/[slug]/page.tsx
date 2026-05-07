@@ -87,24 +87,7 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
         .ad-bottom-full { width: 100%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-top: 30px; margin-bottom: 20px; }
         
         /* OTHER ADS */
-        .ad-horizontal {
-  width: 100%;
-  grid-column: 1 / -1; /* Forces the div to span across the main area AND sidebar area */
-  flex: 0 0 100%;      /* Forces full width if using flexbox */
-  box-sizing: border-box; 
-  height: 120px;
-  background: #f8fafc;
-  border: 2px dashed #cbd5e1;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #94a3b8;
-  font-weight: 800;
-  letter-spacing: 2px;
-  font-size: 12px;
-  margin-bottom: 25px;
-}
+        .ad-horizontal { width: 100%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
         .ad-vertical { width: 100%; height: 350px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
         
         .detail-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
