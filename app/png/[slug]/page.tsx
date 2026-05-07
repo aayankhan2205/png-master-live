@@ -158,7 +158,7 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
           <div className="sidebar-wrapper">
           <style>{`
             @media (min-width: 1024px) {
-              .sidebar-wrapper { margin-top: 145px; } /* Pushes it down exactly past the top ad */
+              .sidebar-wrapper { margin-top: 140px; } /* Pushes it down exactly past the top ad */
             }
           `}</style>
           <div className="ad-vertical">SIDEBAR AD SLOT</div>
