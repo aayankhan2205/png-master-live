@@ -96,7 +96,7 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
   .detail-grid { grid-template-columns: 2fr 1fr; } 
   .action-area { flex-direction: row; align-items: flex-end; justify-content: space-between; } 
   /* MAGIC FIX: This pushes the sidebar ad down on Desktop */
-  .ad-vertical { margin-top: 145px; } 
+  .ad-vertical { margin-top: 148px; } 
 }
 
         .checkerboard { height: 320px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f1f5f9 25%, transparent 25%), linear-gradient(-45deg, #f1f5f9 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f1f5f9 75%), linear-gradient(-45deg, transparent 75%, #f1f5f9 75%); background-size: 15px 15px; background-color: #fff; padding: 20px; border: 1px solid #e2e8f0; border-radius: 20px; margin-bottom: 25px; }
