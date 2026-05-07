@@ -86,18 +86,18 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
         /* FULL WIDTH BOTTOM AD */
         .ad-bottom-full { width: 100%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-top: 30px; margin-bottom: 20px; }
         
-        /* OTHER ADS - Margin-top removed so they align perfectly at the top */
-        .ad-horizontal { width: 100%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
-        .ad-vertical { width: 100%; height: 600px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
+        /* OTHER ADS */
+        .ad-horizontal { width: 150%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
+        .ad-vertical { width: 100%; height: 350px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
         
-        /* THE MAIN 2-COLUMN LAYOUT */
-        .detail-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+        .detail-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        
         @media (min-width: 1024px) { 
           .detail-grid { grid-template-columns: 2fr 1fr; } 
         }
 
-        .checkerboard { height: 400px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f1f5f9 25%, transparent 25%), linear-gradient(-45deg, #f1f5f9 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f1f5f9 75%), linear-gradient(-45deg, transparent 75%, #f1f5f9 75%); background-size: 15px 15px; background-color: #fff; padding: 20px; border: 1px solid #e2e8f0; border-radius: 20px; margin-bottom: 25px; }
-        .main-img { max-height: 360px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); }
+        .checkerboard { height: 320px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f1f5f9 25%, transparent 25%), linear-gradient(-45deg, #f1f5f9 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f1f5f9 75%), linear-gradient(-45deg, transparent 75%, #f1f5f9 75%); background-size: 15px 15px; background-color: #fff; padding: 20px; border: 1px solid #e2e8f0; border-radius: 20px; margin-bottom: 25px; }
+        .main-img { max-height: 280px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); }
         
         .related-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; margin-top: 20px; }
         @media (min-width: 768px) { .related-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
@@ -105,16 +105,11 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
         .r-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         .r-checker { height: 150px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f8fafc 25%, transparent 25%), linear-gradient(-45deg, #f8fafc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f8fafc 75%), linear-gradient(-45deg, transparent 75%, #f8fafc 75%); background-size: 10px 10px; padding: 10px; }
         
-        /* FULL WIDTH INFO BOX */
-        .pro-info-box { width: 100%; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); overflow: hidden; }
-        .pro-info-row { display: flex; justify-content: space-between; align-items: center; padding: 18px 25px; border-bottom: 1px solid #f1f5f9; }
+        .pro-info-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); overflow: hidden; }
+        .pro-info-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid #f1f5f9; }
         .pro-info-row:last-child { border-bottom: none; }
-        .pro-label { font-size: 12px; font-weight: 900; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
-        .pro-value { font-size: 15px; font-weight: 800; color: #0f172a; text-align: right; }
-
-        /* MAGIC FIX: ACTION GRID LAYOUT */
-        .action-area { display: flex; flex-direction: column; gap: 20px; margin-bottom: 30px; }
-        @media (min-width: 1024px) { .action-area { flex-direction: row; align-items: flex-end; justify-content: space-between; } }
+        .pro-label { font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1px; width: 100px; }
+        .pro-value { font-size: 14px; font-weight: 700; color: #0f172a; text-align: right; }
       `}</style>
 
       <div style={{ marginBottom: '20px', fontSize: '12px', fontWeight: 'bold' }}>
@@ -125,10 +120,8 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
 
       <div className="detail-grid">
         
-        {/* --- LEFT COLUMN: AD, IMAGE, INFO, AND DOWNLOAD --- */}
+        {/* --- LEFT COLUMN: IMAGE, TITLE, INFO, AND DOWNLOAD --- */}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          
-          {/* MOVED TOP AD HERE: Now it sits exactly aligned with the right sidebar */}
           <div className="ad-horizontal">ADVERTISEMENT SLOT (TOP)</div>
           
           <div className="checkerboard">
@@ -139,58 +132,53 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
             {img.public_id.split('/').pop()} Transparent PNG
           </h1>
 
-          {/* ACTION GRID */}
-          <div className="action-area">
-            
-            {/* Box 1: Info and Big Download */}
-            <div style={{ flex: '1 1 auto' }}>
-              <div className="pro-info-box">
-                <div className="pro-info-row">
-                  <span className="pro-label">Dimensions</span>
-                  <span className="pro-value">{img.width || 1024} x {img.height || 1024} px</span>
-                </div>
-                <div className="pro-info-row" style={{ backgroundColor: '#f8fafc' }}>
-                  <span className="pro-label">Format</span>
-                  <span className="pro-value" style={{ color: '#2563eb' }}>PNG (Transparent)</span>
-                </div>
-              </div>
-
-              <button 
-                onClick={() => silentDownload(false)}
-                disabled={downloading}
-                style={{ width: '100%', backgroundColor: '#2563eb', color: '#fff', padding: '22px', borderRadius: '16px', fontWeight: '900', fontSize: '20px', border: 'none', cursor: 'pointer', opacity: downloading ? 0.7 : 1, boxShadow: '0 10px 20px rgba(37,99,235,0.2)' }}
-              >
-                {downloading ? "PROCESSING..." : "📥 DOWNLOAD ORIGINAL PNG"}
-              </button>
+          <div className="pro-info-box">
+            <div className="pro-info-row">
+              <span className="pro-label">Dimensions</span>
+              <span className="pro-value">{img.width || 1024} x {img.height || 1024} px</span>
             </div>
-
-            {/* Box 2: Resize Tool */}
-            <div style={{ flex: '0 0 280px', background: '#fff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
-              <h3 style={{ fontSize: '12px', fontWeight: 900, marginBottom: '15px', color: '#0f172a' }}>📐 RESIZE & DOWNLOAD</h3>
-              <div style={{ display: 'flex', gap: '8px', marginBottom: '15px' }}>
-                <input type="number" placeholder="W" value={w} onChange={e => setW(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }} />
-                <input type="number" placeholder="H" value={h} onChange={e => setH(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }} />
-              </div>
-              <button 
-                onClick={() => silentDownload(true)} 
-                disabled={downloading} 
-                style={{ width: '100%', backgroundColor: '#0f172a', color: '#fff', padding: '16px', borderRadius: '12px', fontWeight: 'bold', border: 'none', cursor: 'pointer', fontSize: '14px', transition: '0.2s' }}
-              >
-                {downloading ? "Wait..." : "Resize Image"}
-              </button>
+            <div className="pro-info-row" style={{ backgroundColor: '#f8fafc' }}>
+              <span className="pro-label">Format</span>
+              <span className="pro-value" style={{ color: '#2563eb' }}>PNG (Transparent)</span>
             </div>
+          </div>
 
+          <button 
+            onClick={() => silentDownload(false)}
+            disabled={downloading}
+            style={{ width: '100%', backgroundColor: '#2563eb', color: '#fff', padding: '22px', borderRadius: '16px', fontWeight: '900', fontSize: '20px', border: 'none', cursor: 'pointer', opacity: downloading ? 0.7 : 1, boxShadow: '0 10px 20px rgba(37,99,235,0.2)' }}
+          >
+            {downloading ? "PROCESSING..." : "📥 DOWNLOAD ORIGINAL PNG"}
+          </button>
+        </div>
+
+        {/* --- RIGHT COLUMN: SIDEBAR ADS & RESIZE TOOL --- */}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          
+          <div className="ad-vertical">SIDEBAR AD SLOT</div>
+
+          {/* This pushes the resize tool perfectly to the bottom to align with the blue download button */}
+          <div style={{ flexGrow: 1 }}></div> 
+
+          <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '20px', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
+            <h3 style={{ fontSize: '12px', fontWeight: 900, marginBottom: '15px', color: '#0f172a' }}>📐 RESIZE & DOWNLOAD</h3>
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '15px' }}>
+              <input type="number" placeholder="W" value={w} onChange={e => setW(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }} />
+              <input type="number" placeholder="H" value={h} onChange={e => setH(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }} />
+            </div>
+            <button 
+              onClick={() => silentDownload(true)} 
+              disabled={downloading} 
+              style={{ width: '100%', backgroundColor: '#0f172a', color: '#fff', padding: '16px', borderRadius: '12px', fontWeight: 'bold', border: 'none', cursor: 'pointer', fontSize: '14px', transition: '0.2s' }}
+            >
+              {downloading ? "Wait..." : "Resize Image"}
+            </button>
           </div>
 
         </div>
-
-        {/* --- RIGHT COLUMN: SIDEBAR ADS --- */}
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div className="ad-vertical">SIDEBAR AD SLOT</div>
-        </div>
       </div>
 
-      {/* --- BOTTOM AD (FULL WIDTH) --- */}
+      {/* --- BOTTOM AD (NOW FULL WIDTH) --- */}
       <div className="ad-bottom-full">ADVERTISEMENT SLOT (BOTTOM)</div>
 
       {/* --- SMART RELATED IMAGES --- */}
