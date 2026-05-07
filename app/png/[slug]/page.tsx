@@ -83,23 +83,21 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px', fontFamily: 'sans-serif', color: '#0f172a' }}>
       
       <style>{`
-        /* AD SLOTS */
-        .ad-horizontal { width: 100%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
-        .ad-sidebar { width: 100%; height: 400px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
+        /* FULL WIDTH TOP AD */
+        .ad-top-full { width: 100%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 30px; }
         
-        /* NEW MAIN LAYOUT: Forces Sidebar to start at the very top */
-        .main-container { display: flex; flex-direction: column; gap: 40px; }
-        .left-col { flex: 1; }
-        .right-col { width: 100%; display: flex; flex-direction: column; gap: 25px; }
+        /* OTHER ADS */
+        .ad-horizontal { width: 100%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-top: 25px; margin-bottom: 25px; }
+        .ad-vertical { width: 100%; height: 400px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 20px; }
         
+        /* THE MAIN 2-COLUMN LAYOUT */
+        .detail-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
         @media (min-width: 1024px) { 
-          .main-container { flex-direction: row; }
-          .left-col { flex: 2; /* Takes up roughly 66% of the screen */ }
-          .right-col { flex: 1; /* Takes up roughly 33% of the screen */ position: sticky; top: 20px; align-self: start; }
+          .detail-grid { grid-template-columns: 2fr 1fr; } 
         }
 
-        .checkerboard { height: 350px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f1f5f9 25%, transparent 25%), linear-gradient(-45deg, #f1f5f9 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f1f5f9 75%), linear-gradient(-45deg, transparent 75%, #f1f5f9 75%); background-size: 15px 15px; background-color: #fff; padding: 20px; border: 1px solid #e2e8f0; border-radius: 20px; margin-bottom: 25px; }
-        .main-img { max-height: 310px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); }
+        .checkerboard { height: 400px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f1f5f9 25%, transparent 25%), linear-gradient(-45deg, #f1f5f9 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f1f5f9 75%), linear-gradient(-45deg, transparent 75%, #f1f5f9 75%); background-size: 15px 15px; background-color: #fff; padding: 20px; border: 1px solid #e2e8f0; border-radius: 20px; margin-bottom: 25px; }
+        .main-img { max-height: 360px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); }
         
         .related-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; margin-top: 20px; }
         @media (min-width: 768px) { .related-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
@@ -107,11 +105,12 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
         .r-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         .r-checker { height: 150px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f8fafc 25%, transparent 25%), linear-gradient(-45deg, #f8fafc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f8fafc 75%), linear-gradient(-45deg, transparent 75%, #f8fafc 75%); background-size: 10px 10px; padding: 10px; }
         
-        .pro-info-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); overflow: hidden; }
-        .pro-info-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid #f1f5f9; }
+        /* FULL WIDTH INFO BOX */
+        .pro-info-box { width: 100%; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); overflow: hidden; }
+        .pro-info-row { display: flex; justify-content: space-between; align-items: center; padding: 18px 25px; border-bottom: 1px solid #f1f5f9; }
         .pro-info-row:last-child { border-bottom: none; }
-        .pro-label { font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1px; width: 100px; }
-        .pro-value { font-size: 14px; font-weight: 700; color: #0f172a; text-align: right; }
+        .pro-label { font-size: 12px; font-weight: 900; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+        .pro-value { font-size: 15px; font-weight: 800; color: #0f172a; text-align: right; }
       `}</style>
 
       <div style={{ marginBottom: '20px', fontSize: '12px', fontWeight: 'bold' }}>
@@ -120,20 +119,22 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
         <span style={{ color: '#64748b', textTransform: 'uppercase' }}>{img.public_id.split('/').pop()}</span>
       </div>
 
-      <div className="main-container">
+      {/* --- TOP AD (NOW FULL WIDTH ABOVE EVERYTHING) --- */}
+      <div className="ad-top-full">ADVERTISEMENT SLOT (TOP)</div>
+
+      <div className="detail-grid">
         
-        {/* --- LEFT COLUMN: IMAGE, INFO, AND BIG DOWNLOAD --- */}
-        <div className="left-col">
-          <div className="ad-horizontal">ADVERTISEMENT SLOT (TOP)</div>
-          
+        {/* --- LEFT COLUMN: IMAGE, INFO, AND DOWNLOAD --- */}
+        <div>
           <div className="checkerboard">
             <img src={`https://res.cloudinary.com/dic1ahqrn/image/upload/f_auto,q_auto/${img.public_id}.png`} alt={img.public_id} className="main-img" />
           </div>
 
-          <h1 style={{ fontSize: '36px', fontWeight: 900, marginBottom: '20px', textTransform: 'capitalize', lineHeight: '1.2' }}>
+          <h1 style={{ fontSize: '32px', fontWeight: 900, marginBottom: '20px', textTransform: 'capitalize', lineHeight: '1.2' }}>
             {img.public_id.split('/').pop()} Transparent PNG
           </h1>
-              
+
+          {/* FULL WIDTH INFO BOX */}
           <div className="pro-info-box">
             <div className="pro-info-row">
               <span className="pro-label">Dimensions</span>
@@ -145,10 +146,11 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
             </div>
           </div>
 
+          {/* FULL WIDTH DOWNLOAD BUTTON */}
           <button 
             onClick={() => silentDownload(false)}
             disabled={downloading}
-            style={{ width: '100%', backgroundColor: '#2563eb', color: '#fff', padding: '22px', borderRadius: '16px', fontWeight: '900', fontSize: '20px', border: 'none', cursor: 'pointer', opacity: downloading ? 0.7 : 1, boxShadow: '0 10px 20px rgba(37,99,235,0.2)', marginBottom: '25px' }}
+            style={{ width: '100%', backgroundColor: '#2563eb', color: '#fff', padding: '24px', borderRadius: '16px', fontWeight: '900', fontSize: '22px', border: 'none', cursor: 'pointer', opacity: downloading ? 0.7 : 1, boxShadow: '0 10px 20px rgba(37,99,235,0.2)' }}
           >
             {downloading ? "PROCESSING..." : "📥 DOWNLOAD ORIGINAL PNG"}
           </button>
@@ -156,27 +158,26 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
           <div className="ad-horizontal">ADVERTISEMENT SLOT (BOTTOM)</div>
         </div>
 
-        {/* --- RIGHT COLUMN (SIDEBAR): RESIZE TOOL & ADS --- */}
-        <div className="right-col">
+        {/* --- RIGHT COLUMN: SIDEBAR ADS & RESIZE TOOL --- */}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           
-          {/* Resize Tool moved to the Sidebar */}
-          <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '25px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
-            <h3 style={{ fontSize: '13px', fontWeight: 900, marginBottom: '15px', color: '#0f172a' }}>📐 RESIZE & DOWNLOAD</h3>
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '15px' }}>
-              <input type="number" placeholder="W" value={w} onChange={e => setW(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }} />
-              <input type="number" placeholder="H" value={h} onChange={e => setH(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }} />
+          <div className="ad-vertical">SIDEBAR AD SLOT</div>
+
+          {/* RESIZE TOOL MOVED TO RIGHT SIDEBAR */}
+          <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '25px', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
+            <h3 style={{ fontSize: '14px', fontWeight: 900, marginBottom: '15px', color: '#0f172a' }}>📐 RESIZE & DOWNLOAD</h3>
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
+              <input type="number" placeholder="W" value={w} onChange={e => setW(e.target.value)} style={{ width: '100%', padding: '14px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '14px' }} />
+              <input type="number" placeholder="H" value={h} onChange={e => setH(e.target.value)} style={{ width: '100%', padding: '14px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '14px' }} />
             </div>
             <button 
               onClick={() => silentDownload(true)} 
               disabled={downloading} 
-              style={{ width: '100%', backgroundColor: '#0f172a', color: '#fff', padding: '16px', borderRadius: '12px', fontWeight: 'bold', border: 'none', cursor: 'pointer', fontSize: '14px', transition: '0.2s' }}
+              style={{ width: '100%', backgroundColor: '#0f172a', color: '#fff', padding: '18px', borderRadius: '12px', fontWeight: 'bold', border: 'none', cursor: 'pointer', fontSize: '16px', transition: '0.2s' }}
             >
-              {downloading ? "Wait..." : "Resize & Download"}
+              {downloading ? "Wait..." : "Resize Image"}
             </button>
           </div>
-
-          {/* Sidebar Ad Slot */}
-          <div className="ad-sidebar">SIDEBAR AD SLOT</div>
 
         </div>
       </div>
@@ -184,14 +185,14 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
       {/* --- SMART RELATED IMAGES --- */}
       {relatedImages.length > 0 && (
         <div style={{ marginTop: '30px', borderTop: '2px solid #f1f5f9', paddingTop: '40px' }}>
-          <h2 style={{ fontSize: '22px', fontWeight: 900, marginBottom: '10px' }}>Related PNG Images</h2>
+          <h2 style={{ fontSize: '22px', fontWeight: 900, marginBottom: '20px' }}>Related PNG Images</h2>
           <div className="related-grid">
             {relatedImages.map((relImg) => (
               <Link key={relImg.public_id} href={`/png/${relImg.public_id}`} className="r-card">
                 <div className="r-checker">
                   <img src={`https://res.cloudinary.com/dic1ahqrn/image/upload/w_300,f_auto/${relImg.public_id}.png`} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
                 </div>
-                <div style={{ padding: '12px', fontSize: '12px', fontWeight: 'bold', color: '#334155', borderTop: '1px solid #f1f5f9' }}>
+                <div style={{ padding: '15px', fontSize: '13px', fontWeight: 'bold', color: '#334155', borderTop: '1px solid #f1f5f9' }}>
                   {relImg.public_id.split('/').pop()}
                 </div>
               </Link>
