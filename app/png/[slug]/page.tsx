@@ -87,23 +87,7 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
         .ad-bottom-full { width: 100%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-top: 30px; margin-bottom: 20px; }
         
         /* OTHER ADS */
-        .ad-horizontal {
-  width: 100%;
-  min-height: 120px; /* Increased height to make it "big" */
-  background: #f1f5f9; /* Slightly darker to stand out */
-  border: 3px dashed #94a3b8; /* Thicker border */
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #475569;
-  font-weight: 900;
-  letter-spacing: 5px;
-  font-size: 22px; /* Bigger font size */
-  margin: 30px 0;
-  box-sizing: border-box; /* Ensures it hits the edges perfectly */
-  text-align: center;
-}
+        .ad-horizontal { width: 100%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
         .ad-vertical { width: 100%; height: 350px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
         
         .detail-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
