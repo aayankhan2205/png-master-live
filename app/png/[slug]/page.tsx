@@ -83,29 +83,17 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px', fontFamily: 'sans-serif', color: '#0f172a' }}>
       
       <style>{`
-        /* FULL WIDTH ADS */
-        .ad-full-width { width: 100%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 30px; }
+        /* FULL WIDTH BOTTOM AD */
+        .ad-bottom-full { width: 100%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-top: 30px; margin-bottom: 20px; }
+        
+        /* OTHER ADS */
+        .ad-horizontal { width: 100%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
         .ad-vertical { width: 100%; height: 350px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
         
         .detail-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
         
         @media (min-width: 1024px) { 
           .detail-grid { grid-template-columns: 2fr 1fr; } 
-        }
-
-        /* --- THE ALIGNMENT MAGIC --- */
-        .action-grid { 
-          display: grid; 
-          grid-template-columns: 1fr; 
-          gap: 20px; 
-          margin-bottom: 30px; 
-        }
-        @media (min-width: 1024px) { 
-          .action-grid { 
-            grid-template-columns: 1.5fr 1fr; 
-            /* This forces both boxes to stretch to the exact same height */
-            align-items: stretch; 
-          } 
         }
 
         .checkerboard { height: 320px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f1f5f9 25%, transparent 25%), linear-gradient(-45deg, #f1f5f9 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f1f5f9 75%), linear-gradient(-45deg, transparent 75%, #f1f5f9 75%); background-size: 15px 15px; background-color: #fff; padding: 20px; border: 1px solid #e2e8f0; border-radius: 20px; margin-bottom: 25px; }
@@ -130,13 +118,11 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
         <span style={{ color: '#64748b', textTransform: 'uppercase' }}>{img.public_id.split('/').pop()}</span>
       </div>
 
-      {/* --- FULL WIDTH TOP AD --- */}
-      <div className="ad-full-width">ADVERTISEMENT SLOT (TOP)</div>
-
       <div className="detail-grid">
         
-        {/* --- LEFT COLUMN --- */}
-        <div>
+        {/* --- LEFT COLUMN: IMAGE, TITLE, INFO, AND DOWNLOAD --- */}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div className="ad-horizontal">ADVERTISEMENT SLOT (TOP)</div>
           
           <div className="checkerboard">
             <img src={`https://res.cloudinary.com/dic1ahqrn/image/upload/f_auto,q_auto/${img.public_id}.png`} alt={img.public_id} className="main-img" />
@@ -146,62 +132,54 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
             {img.public_id.split('/').pop()} Transparent PNG
           </h1>
 
-          {/* ACTION GRID */}
-          <div className="action-grid">
-            
-            {/* Box 1: Info and Download */}
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div className="pro-info-box">
-                <div className="pro-info-row">
-                  <span className="pro-label">Dimensions</span>
-                  <span className="pro-value">{img.width || 1024} x {img.height || 1024} px</span>
-                </div>
-                <div className="pro-info-row" style={{ backgroundColor: '#f8fafc' }}>
-                  <span className="pro-label">Format</span>
-                  <span className="pro-value" style={{ color: '#2563eb' }}>PNG (Transparent)</span>
-                </div>
-              </div>
-
-              <button 
-                onClick={() => silentDownload(false)}
-                disabled={downloading}
-                style={{ width: '100%', backgroundColor: '#2563eb', color: '#fff', padding: '22px', borderRadius: '16px', fontWeight: '900', fontSize: '20px', border: 'none', cursor: 'pointer', opacity: downloading ? 0.7 : 1, boxShadow: '0 10px 20px rgba(37,99,235,0.2)' }}
-              >
-                {downloading ? "PROCESSING..." : "📥 DOWNLOAD ORIGINAL PNG"}
-              </button>
+          <div className="pro-info-box">
+            <div className="pro-info-row">
+              <span className="pro-label">Dimensions</span>
+              <span className="pro-value">{img.width || 1024} x {img.height || 1024} px</span>
             </div>
-
-            {/* Box 2: Resize Tool (Forces stretch to match Left side) */}
-            <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
-              <div>
-                <h3 style={{ fontSize: '12px', fontWeight: 900, marginBottom: '15px', color: '#0f172a' }}>📐 RESIZE & DOWNLOAD</h3>
-                <div style={{ display: 'flex', gap: '8px', marginBottom: '15px' }}>
-                  <input type="number" placeholder="W" value={w} onChange={e => setW(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }} />
-                  <input type="number" placeholder="H" value={h} onChange={e => setH(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }} />
-                </div>
-              </div>
-              
-              <button 
-                onClick={() => silentDownload(true)} 
-                disabled={downloading} 
-                style={{ width: '100%', backgroundColor: '#0f172a', color: '#fff', padding: '16px', borderRadius: '12px', fontWeight: 'bold', border: 'none', cursor: 'pointer', fontSize: '14px', transition: '0.2s', marginTop: 'auto' }}
-              >
-                {downloading ? "Wait..." : "Resize"}
-              </button>
+            <div className="pro-info-row" style={{ backgroundColor: '#f8fafc' }}>
+              <span className="pro-label">Format</span>
+              <span className="pro-value" style={{ color: '#2563eb' }}>PNG (Transparent)</span>
             </div>
-
           </div>
+
+          <button 
+            onClick={() => silentDownload(false)}
+            disabled={downloading}
+            style={{ width: '100%', backgroundColor: '#2563eb', color: '#fff', padding: '22px', borderRadius: '16px', fontWeight: '900', fontSize: '20px', border: 'none', cursor: 'pointer', opacity: downloading ? 0.7 : 1, boxShadow: '0 10px 20px rgba(37,99,235,0.2)' }}
+          >
+            {downloading ? "PROCESSING..." : "📥 DOWNLOAD ORIGINAL PNG"}
+          </button>
         </div>
 
-        {/* --- RIGHT COLUMN (SIDEBAR) --- */}
-        <div>
+        {/* --- RIGHT COLUMN: SIDEBAR ADS & RESIZE TOOL --- */}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          
           <div className="ad-vertical">SIDEBAR AD SLOT</div>
-        </div>
 
+          {/* This pushes the resize tool perfectly to the bottom to align with the blue download button */}
+          <div style={{ flexGrow: 1 }}></div> 
+
+          <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '20px', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
+            <h3 style={{ fontSize: '12px', fontWeight: 900, marginBottom: '15px', color: '#0f172a' }}>📐 RESIZE & DOWNLOAD</h3>
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '15px' }}>
+              <input type="number" placeholder="W" value={w} onChange={e => setW(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }} />
+              <input type="number" placeholder="H" value={h} onChange={e => setH(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }} />
+            </div>
+            <button 
+              onClick={() => silentDownload(true)} 
+              disabled={downloading} 
+              style={{ width: '100%', backgroundColor: '#0f172a', color: '#fff', padding: '16px', borderRadius: '12px', fontWeight: 'bold', border: 'none', cursor: 'pointer', fontSize: '14px', transition: '0.2s' }}
+            >
+              {downloading ? "Wait..." : "Resize Image"}
+            </button>
+          </div>
+
+        </div>
       </div>
 
-      {/* --- FULL WIDTH BOTTOM AD (MOVED OUTSIDE THE GRID) --- */}
-      <div className="ad-full-width">ADVERTISEMENT SLOT (BOTTOM)</div>
+      {/* --- BOTTOM AD (NOW FULL WIDTH) --- */}
+      <div className="ad-bottom-full">ADVERTISEMENT SLOT (BOTTOM)</div>
 
       {/* --- SMART RELATED IMAGES --- */}
       {relatedImages.length > 0 && (
@@ -213,7 +191,7 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
                 <div className="r-checker">
                   <img src={`https://res.cloudinary.com/dic1ahqrn/image/upload/w_300,f_auto/${relImg.public_id}.png`} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
                 </div>
-                <div style={{ padding: '12px', fontSize: '12px', fontWeight: 'bold', color: '#334155', borderTop: '1px solid #f1f5f9' }}>
+                <div style={{ padding: '15px', fontSize: '13px', fontWeight: 'bold', color: '#334155', borderTop: '1px solid #f1f5f9' }}>
                   {relImg.public_id.split('/').pop()}
                 </div>
               </Link>
