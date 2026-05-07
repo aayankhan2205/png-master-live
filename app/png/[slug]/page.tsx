@@ -89,7 +89,7 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
         /* OTHER ADS */
         .ad-horizontal {
   width: 100%;
-  min-height: 250px; /* Increased height to make it "big" */
+  min-height: 120px; /* Increased height to make it "big" */
   background: #f1f5f9; /* Slightly darker to stand out */
   border: 3px dashed #94a3b8; /* Thicker border */
   border-radius: 15px;
