@@ -1,5 +1,7 @@
 "use client";
 
+export const runtime = 'edge';
+
 import { useEffect, useState, use } from 'react';
 import Link from 'next/link';
 
@@ -81,32 +83,23 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px', fontFamily: 'sans-serif', color: '#0f172a' }}>
       
       <style>{`
+        /* AD SLOTS */
         .ad-horizontal { width: 100%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
-        .ad-vertical { width: 100%; height: 350px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
+        .ad-sidebar { width: 100%; height: 400px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
         
-        .detail-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
-        
-        /* MAGIC FIX: ACTION GRID LAYOUT */
-        .action-grid { 
-          display: grid; 
-          grid-template-columns: 1fr; /* Mobile: Stacked */
-          gap: 20px; 
-          margin-bottom: 30px; 
-        }
+        /* NEW MAIN LAYOUT: Forces Sidebar to start at the very top */
+        .main-container { display: flex; flex-direction: column; gap: 40px; }
+        .left-col { flex: 1; }
+        .right-col { width: 100%; display: flex; flex-direction: column; gap: 25px; }
         
         @media (min-width: 1024px) { 
-          .detail-grid { grid-template-columns: 2fr 1fr; } 
-          .action-grid { 
-            grid-template-columns: 1.5fr 1fr; /* Exact proportions you requested */
-            align-items: stretch; /* Forces both boxes to be the exact same height */
-          } 
+          .main-container { flex-direction: row; }
+          .left-col { flex: 2; /* Takes up roughly 66% of the screen */ }
+          .right-col { flex: 1; /* Takes up roughly 33% of the screen */ position: sticky; top: 20px; align-self: start; }
         }
 
-        /* Forces internal content to space out perfectly so heights match */
-        .action-box { display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
-
-        .checkerboard { height: 320px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f1f5f9 25%, transparent 25%), linear-gradient(-45deg, #f1f5f9 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f1f5f9 75%), linear-gradient(-45deg, transparent 75%, #f1f5f9 75%); background-size: 15px 15px; background-color: #fff; padding: 20px; border: 1px solid #e2e8f0; border-radius: 20px; margin-bottom: 25px; }
-        .main-img { max-height: 280px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); }
+        .checkerboard { height: 350px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f1f5f9 25%, transparent 25%), linear-gradient(-45deg, #f1f5f9 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f1f5f9 75%), linear-gradient(-45deg, transparent 75%, #f1f5f9 75%); background-size: 15px 15px; background-color: #fff; padding: 20px; border: 1px solid #e2e8f0; border-radius: 20px; margin-bottom: 25px; }
+        .main-img { max-height: 310px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); }
         
         .related-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; margin-top: 20px; }
         @media (min-width: 768px) { .related-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
@@ -127,72 +120,64 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
         <span style={{ color: '#64748b', textTransform: 'uppercase' }}>{img.public_id.split('/').pop()}</span>
       </div>
 
-      <div className="detail-grid">
+      <div className="main-container">
         
-        {/* --- LEFT COLUMN --- */}
-        <div>
+        {/* --- LEFT COLUMN: IMAGE, INFO, AND BIG DOWNLOAD --- */}
+        <div className="left-col">
           <div className="ad-horizontal">ADVERTISEMENT SLOT (TOP)</div>
           
           <div className="checkerboard">
             <img src={`https://res.cloudinary.com/dic1ahqrn/image/upload/f_auto,q_auto/${img.public_id}.png`} alt={img.public_id} className="main-img" />
           </div>
 
-          {/* MOVED TITLE ABOVE THE BOXES */}
-          <h1 style={{ fontSize: '32px', fontWeight: 900, marginBottom: '20px', textTransform: 'capitalize', lineHeight: '1.2' }}>
+          <h1 style={{ fontSize: '36px', fontWeight: 900, marginBottom: '20px', textTransform: 'capitalize', lineHeight: '1.2' }}>
             {img.public_id.split('/').pop()} Transparent PNG
           </h1>
-
-          {/* STRICT ACTION GRID */}
-          <div className="action-grid">
-            
-            {/* Box 1: Info and Big Download */}
-            <div className="action-box">
-              <div className="pro-info-box">
-                <div className="pro-info-row">
-                  <span className="pro-label">Dimensions</span>
-                  <span className="pro-value">{img.width || 1024} x {img.height || 1024} px</span>
-                </div>
-                <div className="pro-info-row" style={{ backgroundColor: '#f8fafc' }}>
-                  <span className="pro-label">Format</span>
-                  <span className="pro-value" style={{ color: '#2563eb' }}>PNG (Transparent)</span>
-                </div>
-              </div>
-
-              <button 
-                onClick={() => silentDownload(false)}
-                disabled={downloading}
-                style={{ width: '100%', backgroundColor: '#2563eb', color: '#fff', padding: '22px', borderRadius: '16px', fontWeight: '900', fontSize: '20px', border: 'none', cursor: 'pointer', opacity: downloading ? 0.7 : 1, boxShadow: '0 10px 20px rgba(37,99,235,0.2)' }}
-              >
-                {downloading ? "PROCESSING..." : "📥 DOWNLOAD ORIGINAL PNG"}
-              </button>
+              
+          <div className="pro-info-box">
+            <div className="pro-info-row">
+              <span className="pro-label">Dimensions</span>
+              <span className="pro-value">{img.width || 1024} x {img.height || 1024} px</span>
             </div>
-
-            {/* Box 2: Resize Tool */}
-            <div className="action-box" style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '20px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
-              <div>
-                <h3 style={{ fontSize: '12px', fontWeight: 900, marginBottom: '15px', color: '#0f172a' }}>📐 RESIZE & DOWNLOAD</h3>
-                <div style={{ display: 'flex', gap: '8px', marginBottom: '15px' }}>
-                  <input type="number" placeholder="W" value={w} onChange={e => setW(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }} />
-                  <input type="number" placeholder="H" value={h} onChange={e => setH(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }} />
-                </div>
-              </div>
-              <button 
-                onClick={() => silentDownload(true)} 
-                disabled={downloading} 
-                style={{ width: '100%', backgroundColor: '#0f172a', color: '#fff', padding: '16px', borderRadius: '12px', fontWeight: 'bold', border: 'none', cursor: 'pointer', fontSize: '14px', transition: '0.2s' }}
-              >
-                {downloading ? "Wait..." : "Resize"}
-              </button>
+            <div className="pro-info-row" style={{ backgroundColor: '#f8fafc' }}>
+              <span className="pro-label">Format</span>
+              <span className="pro-value" style={{ color: '#2563eb' }}>PNG (Transparent)</span>
             </div>
-
           </div>
+
+          <button 
+            onClick={() => silentDownload(false)}
+            disabled={downloading}
+            style={{ width: '100%', backgroundColor: '#2563eb', color: '#fff', padding: '22px', borderRadius: '16px', fontWeight: '900', fontSize: '20px', border: 'none', cursor: 'pointer', opacity: downloading ? 0.7 : 1, boxShadow: '0 10px 20px rgba(37,99,235,0.2)', marginBottom: '25px' }}
+          >
+            {downloading ? "PROCESSING..." : "📥 DOWNLOAD ORIGINAL PNG"}
+          </button>
 
           <div className="ad-horizontal">ADVERTISEMENT SLOT (BOTTOM)</div>
         </div>
 
-        {/* --- RIGHT COLUMN (SIDEBAR) --- */}
-        <div>
-          <div className="ad-vertical">SIDEBAR AD SLOT</div>
+        {/* --- RIGHT COLUMN (SIDEBAR): RESIZE TOOL & ADS --- */}
+        <div className="right-col">
+          
+          {/* Resize Tool moved to the Sidebar */}
+          <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '25px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
+            <h3 style={{ fontSize: '13px', fontWeight: 900, marginBottom: '15px', color: '#0f172a' }}>📐 RESIZE & DOWNLOAD</h3>
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '15px' }}>
+              <input type="number" placeholder="W" value={w} onChange={e => setW(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }} />
+              <input type="number" placeholder="H" value={h} onChange={e => setH(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }} />
+            </div>
+            <button 
+              onClick={() => silentDownload(true)} 
+              disabled={downloading} 
+              style={{ width: '100%', backgroundColor: '#0f172a', color: '#fff', padding: '16px', borderRadius: '12px', fontWeight: 'bold', border: 'none', cursor: 'pointer', fontSize: '14px', transition: '0.2s' }}
+            >
+              {downloading ? "Wait..." : "Resize & Download"}
+            </button>
+          </div>
+
+          {/* Sidebar Ad Slot */}
+          <div className="ad-sidebar">SIDEBAR AD SLOT</div>
+
         </div>
       </div>
 
