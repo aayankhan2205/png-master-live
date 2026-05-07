@@ -8,6 +8,9 @@ import Link from 'next/link';
 export default function PngPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   
+  // MAGIC FIX: This decodes spaces (e.g. "M1A1%20Tank" becomes "M1A1 Tank")
+  const decodedSlug = decodeURIComponent(slug);
+  
   const [img, setImg] = useState<any>(null);
   const [relatedImages, setRelatedImages] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -24,7 +27,8 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
         const res = await fetch(url);
         const data = await res.json();
         
-        const found = data.resources.find((r: any) => r.public_id === slug);
+        // We now search using the DECODED slug
+        const found = data.resources.find((r: any) => r.public_id === decodedSlug);
         setImg(found);
 
         if (found) {
@@ -32,7 +36,7 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
           const words = currentName.split(/[-_\s]+/).filter((w: string) => w.length > 2);
           
           const related = data.resources.filter((r: any) => {
-            if (r.public_id === slug) return false;
+            if (r.public_id === decodedSlug) return false;
             const targetName = r.public_id.toLowerCase();
             return words.some((w: string) => targetName.includes(w));
           });
@@ -46,7 +50,7 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
       }
     }
     fetchImage();
-  }, [slug]);
+  }, [decodedSlug]);
 
   const silentDownload = async (isResized: boolean) => {
     if (!img || downloading) return;
@@ -86,21 +90,11 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
         .ad-vertical { width: 100%; height: 350px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
         
         .detail-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
-        
-        /* MAGIC FIX: ACTION GRID LAYOUT */
-        .action-area { 
-          display: grid; 
-          grid-template-columns: 1fr; /* Mobile: Stacked */
-          gap: 30px; 
-          margin-bottom: 30px; 
-        }
+        .action-area { display: flex; flex-direction: column; gap: 20px; margin-bottom: 30px; }
         
         @media (min-width: 1024px) { 
           .detail-grid { grid-template-columns: 2fr 1fr; } 
-          .action-area { 
-            grid-template-columns: 1.5fr 1fr; /* Desktop: Info/Download gets 1.5x space, Resize gets 1x space */
-            align-items: end; /* Aligns the bottoms of the boxes */
-          } 
+          .action-area { flex-direction: row; align-items: flex-end; justify-content: space-between; } 
         }
 
         .checkerboard { height: 320px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f1f5f9 25%, transparent 25%), linear-gradient(-45deg, #f1f5f9 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f1f5f9 75%), linear-gradient(-45deg, transparent 75%, #f1f5f9 75%); background-size: 15px 15px; background-color: #fff; padding: 20px; border: 1px solid #e2e8f0; border-radius: 20px; margin-bottom: 25px; }
@@ -112,7 +106,7 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
         .r-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         .r-checker { height: 150px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f8fafc 25%, transparent 25%), linear-gradient(-45deg, #f8fafc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f8fafc 75%), linear-gradient(-45deg, transparent 75%, #f8fafc 75%); background-size: 10px 10px; padding: 10px; }
         
-        .pro-info-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); overflow: hidden; }
+        .pro-info-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0; margin-bottom: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); overflow: hidden; }
         .pro-info-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid #f1f5f9; }
         .pro-info-row:last-child { border-bottom: none; }
         .pro-label { font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1px; width: 100px; }
@@ -135,11 +129,10 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
             <img src={`https://res.cloudinary.com/dic1ahqrn/image/upload/f_auto,q_auto/${img.public_id}.png`} alt={img.public_id} className="main-img" />
           </div>
 
-          {/* EXACTLY LIKE YOUR SKETCH */}
           <div className="action-area">
             
             {/* Box 1: Title, Info, and Big Download */}
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ flex: '1 1 auto' }}>
               <h1 style={{ fontSize: '32px', fontWeight: 900, marginBottom: '20px', textTransform: 'capitalize', lineHeight: '1.2' }}>
                 {img.public_id.split('/').pop()} Transparent PNG
               </h1>
@@ -165,7 +158,7 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
             </div>
 
             {/* Box 2: Resize Tool */}
-            <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
+            <div style={{ flex: '0 0 280px', background: '#fff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
               <h3 style={{ fontSize: '12px', fontWeight: 900, marginBottom: '15px', color: '#0f172a' }}>📐 RESIZE & DOWNLOAD</h3>
               <div style={{ display: 'flex', gap: '8px', marginBottom: '15px' }}>
                 <input type="number" placeholder="W" value={w} onChange={e => setW(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }} />
