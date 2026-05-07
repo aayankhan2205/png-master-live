@@ -87,7 +87,7 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
       
       <style>{`
         .ad-horizontal { width: 100%; height: 120px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
-        .ad-vertical { width: 100%; height: 600px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
+        .ad-vertical { width: 100%; height: 800px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 800; letter-spacing: 2px; font-size: 12px; margin-bottom: 25px; }
         
         .detail-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
         .action-area { display: flex; flex-direction: column; gap: 20px; margin-bottom: 30px; }
@@ -96,7 +96,7 @@ export default function PngPage({ params }: { params: Promise<{ slug: string }> 
   .detail-grid { grid-template-columns: 2fr 1fr; } 
   .action-area { flex-direction: row; align-items: flex-end; justify-content: space-between; } 
   /* MAGIC FIX: This pushes the sidebar ad down on Desktop */
-  .ad-vertical { margin-top: 148px; } 
+  .ad-vertical { margin-top: 150px; } 
 }
 
         .checkerboard { height: 320px; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(45deg, #f1f5f9 25%, transparent 25%), linear-gradient(-45deg, #f1f5f9 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f1f5f9 75%), linear-gradient(-45deg, transparent 75%, #f1f5f9 75%); background-size: 15px 15px; background-color: #fff; padding: 20px; border: 1px solid #e2e8f0; border-radius: 20px; margin-bottom: 25px; }
