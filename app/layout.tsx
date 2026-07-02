@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/terms" style={{ color: '#475569', textDecoration: 'none' }}>Terms of Use</Link>
             <Link href="/contact" style={{ color: '#475569', textDecoration: 'none' }}>Contact Us</Link>
           </div>
-          <p style={{ fontSize: '10px', color: '#94a3b8' }}>© 2025 PNGWORLD. High Quality PNG Assets.</p>
+          <p style={{ fontSize: '10px', color: '#94a3b8' }}>© 2026 PNGWORLD. High Quality PNG Assets.</p>
         </footer>
       </body>
     </html>
